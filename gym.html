@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     SITES BY ANT — CLIENT DEMO (gym / fitness studio variant)
+     Demo business: "Foundry Strength Club" (fictional)
+     Visual system: gym chalkboard / plate stack. Near-black,
+     signal red, condensed caps display. Schedule is the hero.
+     Search CHANGE: for every per-client swap point.
+     ============================================================ -->
+<title>Foundry Strength Club — Small-Group Strength Training | Campbell</title>
+<meta name="description" content="Coached small-group strength training in Campbell. Twelve people per class, every lift coached. See this week's schedule and start with a free week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ExerciseGym",
+  "name": "Foundry Strength Club",
+  "telephone": "+1-408-555-0119",
+  "address": {"@type": "PostalAddress", "addressLocality": "Campbell", "addressRegion": "CA"},
+  "url": "https://example.com",
+  "sameAs": ["https://instagram.com/foundrystrength"]
+}
+</script>
+<style>
+  :root{
+    --iron:#15161a;
+    --iron-2:#1d1f24;
+    --chalk:#f2f2f0;
+    --dust:#8b8d94;
+    --rule:#2e3138;
+    --signal:#e63b2e;
+    --signal-dark:#c22c21;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:'Public Sans',-apple-system,sans-serif;
+    background:var(--iron);color:var(--chalk);
+    font-size:17px;line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Anton',sans-serif;text-transform:uppercase;line-height:1;letter-spacing:.01em;font-weight:400}
+  img{max-width:100%;display:block}
+  a{color:var(--signal)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+
+  /* showroom ribbon */
+  .demo-ribbon{
+    background:#0d0e11;color:var(--dust);text-align:center;
+    font-size:.8rem;letter-spacing:.06em;padding:8px 16px;
+  }
+  .demo-ribbon a{color:#fff;font-weight:600;text-decoration:underline}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:10;background:var(--iron);border-bottom:1px solid var(--rule)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:'Anton';font-size:1.2rem;color:var(--chalk);text-decoration:none;text-transform:uppercase;letter-spacing:.03em}
+  .brand b{color:var(--signal);font-weight:400}
+  .nav-links{display:flex;gap:22px;align-items:center}
+  .nav-links a{color:var(--dust);text-decoration:none;font-size:.92rem;font-weight:600}
+  .nav-links a:hover{color:var(--chalk)}
+  .nav-cta{background:var(--signal);color:#fff !important;padding:10px 16px;border-radius:3px;font-weight:700;text-transform:uppercase;font-size:.85rem;letter-spacing:.05em}
+  .nav-cta:hover{background:var(--signal-dark)}
+  @media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* hero */
+  .hero{
+    position:relative;
+    background:linear-gradient(rgba(21,22,26,.55),rgba(21,22,26,.92)),
+      url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=70') center/cover no-repeat;
+    padding:110px 0 90px;border-bottom:1px solid var(--rule);
+  }
+  .hero .kick{color:var(--signal);font-weight:700;letter-spacing:.28em;text-transform:uppercase;font-size:.8rem;margin-bottom:14px}
+  .hero h1{font-size:clamp(2.8rem,8.5vw,5.2rem);max-width:9em;margin-bottom:20px}
+  .hero h1 em{font-style:normal;color:var(--signal)}
+  .hero p{color:#c9cac6;max-width:32em;font-size:1.1rem;margin-bottom:30px}
+  .btn{
+    display:inline-block;background:var(--signal);color:#fff;text-decoration:none;
+    font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.95rem;
+    padding:15px 28px;border-radius:3px;border:none;cursor:pointer;font-family:inherit;
+  }
+  .btn:hover{background:var(--signal-dark)}
+  .btn.line{background:transparent;border:1.5px solid var(--dust);color:var(--chalk)}
+  .btn.line:hover{border-color:var(--chalk)}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-note{margin-top:16px;font-size:.88rem;color:var(--dust)}
+
+  section{padding:76px 0}
+  .kick{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--signal);margin-bottom:10px;font-weight:700}
+  .sec-title{font-size:clamp(2rem,5.5vw,3.2rem);margin-bottom:12px}
+  .sec-sub{color:var(--dust);max-width:38em;margin-bottom:42px}
+
+  /* format cards */
+  .fmt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.fmt-grid{grid-template-columns:1fr}}
+  .fmt{background:var(--iron-2);border:1px solid var(--rule);border-radius:5px;padding:26px;border-left:4px solid var(--signal)}
+  .fmt h3{font-size:1.35rem;margin-bottom:8px}
+  .fmt .cap{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dust);margin-bottom:12px;font-weight:600}
+  .fmt p{font-size:.94rem;color:#b9bab6}
+
+  /* schedule */
+  .sched-sec{background:var(--iron-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .sched{overflow-x:auto}
+  .sched table{width:100%;border-collapse:collapse;min-width:640px;font-variant-numeric:tabular-nums}
+  .sched th{
+    font-family:'Anton';font-weight:400;text-transform:uppercase;letter-spacing:.06em;
+    font-size:.95rem;color:var(--dust);text-align:left;padding:12px 14px;border-bottom:2px solid var(--rule);
+  }
+  .sched td{padding:13px 14px;border-bottom:1px solid var(--rule);font-size:.92rem}
+  .sched td:first-child{font-weight:700;white-space:nowrap;color:var(--chalk)}
+  .sched .cls{display:inline-block;padding:4px 10px;border-radius:3px;font-weight:600;font-size:.85rem}
+  .cls.str{background:rgba(230,59,46,.15);color:#ff6a5e}
+  .cls.con{background:rgba(240,177,42,.12);color:#f0b12a}
+  .cls.opn{background:rgba(139,141,148,.15);color:#b9bab6}
+  .sched-note{margin-top:24px;font-size:.9rem;color:var(--dust)}
+
+  /* coaches */
+  .coach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.coach-grid{grid-template-columns:1fr}}
+  .coach{background:var(--iron-2);border:1px solid var(--rule);border-radius:5px;padding:26px;text-align:center}
+  .coach .no{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--signal);font-weight:700}
+  .coach h3{font-size:1.4rem;margin:8px 0 6px}
+  .coach p{font-size:.9rem;color:#b9bab6}
+  .coach .cred{margin-top:12px;font-size:.78rem;color:var(--dust);letter-spacing:.05em;text-transform:uppercase}
+
+  /* today highlight — set by script */
+  .sched th.today,.sched td.today{background:rgba(230,59,46,.08)}
+  .sched th.today{color:var(--signal)}
+  .today-tag{
+    display:inline-block;margin-left:6px;font-size:.62rem;background:var(--signal);
+    color:#fff;border-radius:3px;padding:2px 6px;letter-spacing:.08em;vertical-align:middle;
+    font-family:'Public Sans',sans-serif;font-weight:700;
+  }
+
+  /* membership pricing */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:920px;margin:0 auto}
+  @media(max-width:760px){.plans{grid-template-columns:1fr}}
+  .plan{background:var(--iron-2);border:1px solid var(--rule);border-radius:5px;padding:28px;display:flex;flex-direction:column}
+  .plan.em{border:2px solid var(--signal);position:relative}
+  .plan.em::before{
+    content:"Most members";position:absolute;top:-11px;left:22px;
+    background:var(--signal);color:#fff;font-size:.68rem;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:3px;
+  }
+  .plan h3{font-size:1.3rem;margin-bottom:4px}
+  .plan .pnum{font-family:'Anton';font-size:2.4rem;color:var(--chalk);margin:8px 0 2px;font-variant-numeric:tabular-nums}
+  .plan .pnum small{font-family:'Public Sans';font-size:.9rem;color:var(--dust);font-weight:500}
+  .plan ul{list-style:none;margin:16px 0 22px;flex:1}
+  .plan li{padding:7px 0;font-size:.9rem;color:#b9bab6;border-top:1px solid var(--rule)}
+  .plan li::before{content:"› ";color:var(--signal);font-weight:700}
+  .plan .btn{text-align:center}
+  .plans-note{text-align:center;margin-top:26px;font-size:.88rem;color:var(--dust)}
+
+  /* review */
+  .quote-wrap{max-width:680px;margin:0 auto;text-align:center}
+  blockquote{font-size:clamp(1.15rem,2.5vw,1.45rem);line-height:1.5;font-weight:600}
+  .quote-by{margin-top:16px;color:var(--dust);font-size:.88rem;letter-spacing:.08em;text-transform:uppercase}
+  .quote-row{display:flex;justify-content:center;gap:10px;margin-top:30px;flex-wrap:wrap}
+  .quote-chip{font-size:.83rem;color:var(--dust);border:1px solid var(--rule);border-radius:99px;padding:7px 15px}
+  .quote-chip b{color:var(--signal);font-weight:700}
+
+  /* trial */
+  .trial{
+    background:linear-gradient(rgba(21,22,26,.68),rgba(21,22,26,.9)),
+      url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600&q=70') center/cover no-repeat;
+    border-top:1px solid var(--rule);text-align:center;
+  }
+  .trial .sec-title{max-width:14em;margin:0 auto 14px}
+  .trial .sec-sub{margin:0 auto 30px;text-align:center}
+  .trial-inner{max-width:480px;margin:0 auto;text-align:left}
+  .trial label{display:block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dust);margin-bottom:6px;font-weight:700}
+  .trial input{
+    width:100%;background:rgba(29,31,36,.9);border:1px solid var(--rule);border-radius:4px;
+    color:var(--chalk);font:inherit;font-size:.96rem;padding:13px 15px;margin-bottom:16px;
+  }
+  .trial input:focus{outline:2px solid var(--signal);outline-offset:1px;border-color:transparent}
+  .trial .btn{width:100%}
+  .or-call{text-align:center;margin-top:22px;font-size:.92rem;color:var(--dust)}
+  .or-call a{color:var(--chalk);font-family:'Anton';font-size:1.5rem;text-decoration:none;display:block;margin-top:4px;letter-spacing:.04em}
+  .or-call a:hover{color:var(--signal)}
+
+  footer{border-top:1px solid var(--rule);padding:28px 0;text-align:center;color:var(--dust);font-size:.85rem}
+  footer .sock{margin-bottom:8px}
+  footer .sock a{color:var(--chalk);text-decoration:none;margin:0 10px;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem}
+  footer .sock a:hover{color:var(--signal)}
+  footer .credit a{color:#5c5e66}
+
+  :focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">One of five demo sites by <a href="index.html">Sites by Ant — see the rest</a></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">Foundry <b>Strength</b></a>
+    <nav class="nav-links">
+      <a href="#formats">Training</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#pricing">Membership</a>
+      <a href="#coaches">Coaches</a>
+      <a class="nav-cta" href="#trial">Free week</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kick">Small-group strength · Campbell, CA</div>
+    <h1>Lift with a coach <em>watching every rep</em></h1>
+    <p>Twelve people per class, two coaches on the floor, and a program that actually goes somewhere. No mirrors-and-machines maze, no figuring it out alone.</p>
+    <div class="btn-row">
+      <a class="btn" href="#trial">Start your free week</a>
+      <a class="btn line" href="#schedule">See this week's classes</a>
+    </div>
+    <p class="hero-note">First week is genuinely free — every class, no card on file.</p>
+  </div>
+</section>
+
+<section id="formats">
+  <div class="wrap">
+    <div class="kick">The training</div>
+    <h2 class="sec-title">Three ways to train</h2>
+    <p class="sec-sub">Every class is coached start to finish. You get a program, not a playlist.</p>
+    <div class="fmt-grid">
+      <div class="fmt">
+        <h3>Strength</h3>
+        <div class="cap">60 min · barbell</div>
+        <p>Squat, press, hinge, pull. Percentages programmed week to week — you'll know exactly why today's bar feels the way it does.</p>
+      </div>
+      <div class="fmt">
+        <h3>Conditioning</h3>
+        <div class="cap">45 min · engine work</div>
+        <p>Sleds, rowers, kettlebells, and intervals with a clock. Hard, scaled to you, and done in time to shower before work.</p>
+      </div>
+      <div class="fmt">
+        <h3>Open floor</h3>
+        <div class="cap">Members · anytime</div>
+        <p>Run your own session with the platforms, racks, and specialty bars — a coach is always on the floor if you want eyes on a lift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule" class="sched-sec">
+  <div class="wrap">
+    <div class="kick">This week</div>
+    <h2 class="sec-title">Class schedule</h2>
+    <p class="sec-sub">Book through the member app — drop-ins welcome when there's a spot on the board.</p>
+    <div class="sched">
+      <!-- CHANGE: real weekly schedule -->
+      <table>
+        <tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+        <tr>
+          <td>6:00a</td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td rowspan="2"><span class="cls opn">Open floor 8–12</span></td>
+        </tr>
+        <tr>
+          <td>12:00p</td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls opn">Open floor</span></td>
+        </tr>
+        <tr>
+          <td>5:30p</td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>6:45p</td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls opn">Open floor</span></td>
+          <td><span class="cls str">Strength</span></td>
+          <td><span class="cls con">Conditioning</span></td>
+          <td><span class="cls opn">Open floor</span></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <p class="sched-note">Sunday the doors stay shut. Recovery is part of the program. Today's column lights up on its own.</p>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="kick">Membership</div>
+    <h2 class="sec-title">Pick your pace</h2>
+    <p class="sec-sub">Month to month, cancel with two weeks' notice. Nobody gets locked into a contract they stopped using in February.</p>
+    <div class="plans">
+      <!-- CHANGE: real plans and prices -->
+      <div class="plan">
+        <h3>2× / week</h3>
+        <div class="pnum">$149 <small>/ month</small></div>
+        <ul>
+          <li>Any 2 coached classes weekly</li>
+          <li>Open floor on Saturdays</li>
+          <li>Program tracking in the app</li>
+        </ul>
+        <a class="btn line" href="#trial">Start free week</a>
+      </div>
+      <div class="plan em">
+        <h3>Unlimited</h3>
+        <div class="pnum">$199 <small>/ month</small></div>
+        <ul>
+          <li>Every coached class, every week</li>
+          <li>Open floor, all hours</li>
+          <li>Quarterly 1-on-1 program review</li>
+          <li>Bring a friend Fridays</li>
+        </ul>
+        <a class="btn" href="#trial">Start free week</a>
+      </div>
+      <div class="plan">
+        <h3>Open floor</h3>
+        <div class="pnum">$99 <small>/ month</small></div>
+        <ul>
+          <li>Platforms, racks &amp; bars, all hours</li>
+          <li>Coach on the floor for form checks</li>
+          <li>Add classes anytime, prorated</li>
+        </ul>
+        <a class="btn line" href="#trial">Start free week</a>
+      </div>
+    </div>
+    <p class="plans-note">Students and first responders: ask about the 15% rate. Founding-member pricing never goes up while you stay.</p>
+  </div>
+</section>
+
+<section id="coaches">
+  <div class="wrap">
+    <div class="kick">The floor</div>
+    <h2 class="sec-title">Who's coaching you</h2>
+    <p class="sec-sub">Small classes only work if the coaching is real. Ours have the certs — and the mileage under the bar.</p>
+    <div class="coach-grid">
+      <!-- CHANGE: real coaches, certs, lifts -->
+      <div class="coach">
+        <div class="no">Head coach</div>
+        <h3>Rae</h3>
+        <p>Programs the whole gym. Competitive powerlifter; will fix your deadlift in one cue, then make you do it again.</p>
+        <div class="cred">CSCS · USAPL coach</div>
+      </div>
+      <div class="coach">
+        <div class="no">Coach</div>
+        <h3>Tomás</h3>
+        <p>Runs the 6am crowd. Endlessly patient with beginners, merciless with excuses.</p>
+        <div class="cred">NASM-CPT · Kettlebell L2</div>
+      </div>
+      <div class="coach">
+        <div class="no">Coach</div>
+        <h3>Kenji</h3>
+        <p>Conditioning classes and the reason the sleds are worn smooth. Former collegiate rower.</p>
+        <div class="cred">CF-L2 · Rowing coach</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sched-sec">
+  <div class="wrap quote-wrap">
+    <div class="kick">Word of mouth</div>
+    <!-- CHANGE: the single best real Google review, verbatim -->
+    <blockquote>&ldquo;I've paid for three big-box memberships I never used. Six months here and I haven't missed a week — someone notices when you don't show up, and my squat went up 40 pounds.&rdquo;</blockquote>
+    <div class="quote-by">Sam T — Google review</div>
+    <div class="quote-row">
+      <span class="quote-chip"><b>5.0★</b> on Google · 90+ reviews</span>
+      <span class="quote-chip"><b>12</b> people per class, max</span>
+    </div>
+  </div>
+</section>
+
+<section id="trial" class="trial">
+  <div class="wrap">
+    <div class="kick" style="text-align:center">No card. No pitch.</div>
+    <h2 class="sec-title">Your first week is free</h2>
+    <p class="sec-sub">Come to any class for seven days. If it's not your gym, no hard feelings — you'll know by Wednesday.</p>
+    <div class="trial-inner">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <label for="t-name">Your name</label>
+        <input id="t-name" name="name" type="text" required autocomplete="name">
+        <label for="t-contact">Email or phone</label>
+        <input id="t-contact" name="contact" type="text" required>
+        <label for="t-when">When do you want to start?</label>
+        <input id="t-when" name="start" type="text" placeholder="Monday 6am, if I survive">
+        <button class="btn" type="submit">Claim my free week</button>
+      </form>
+      <div class="or-call">
+        Questions first?
+        <a href="tel:+14085550119">(408) 555-0119</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="sock">
+    <a href="https://instagram.com/" rel="noopener">Instagram</a>
+    <a href="tel:+14085550119">Call</a>
+  </div>
+  <div>© 2026 Foundry Strength Club · Campbell, CA</div>
+  <div class="credit"><a href="https://sitesbyant.com" rel="noopener">Site by Ant</a></div>
+</footer>
+
+<script>
+  // Light up today's column in the schedule (Mon=1 … Sat=6)
+  (function(){
+    const day = new Date().getDay();
+    if (day === 0) return; // Sunday — closed
+    const table = document.querySelector('.sched table');
+    const rows = table.rows;
+    const th = rows[0].cells[day];
+    if (!th) return;
+    th.classList.add('today');
+    th.insertAdjacentHTML('beforeend', '<span class="today-tag">Today</span>');
+    for (let r = 1; r < rows.length; r++){
+      // rowspan in the Sat column shifts later cells; guard by header count
+      const cell = rows[r].cells[day];
+      if (cell) cell.classList.add('today');
+    }
+  })();
+</script>
+
+</body>
+</html>

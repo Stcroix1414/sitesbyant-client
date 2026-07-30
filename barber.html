@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     SITES BY ANT — CLIENT DEMO (barbershop variant)
+     Demo business: "Hollow & Crown Barber Co." (fictional)
+     Visual system: old appointment book. Warm ivory paper, ink
+     black, barber-pole red. Serif display, ruled price list.
+     Search CHANGE: for every per-client swap point.
+     ============================================================ -->
+<title>Hollow &amp; Crown Barber Co. — Barbershop | Willow Glen, San Jose</title>
+<meta name="description" content="Classic cuts, skin fades, and hot-towel shaves in Willow Glen. Four chairs, straightforward prices, walk-ins when the book allows. Book online or call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "name": "Hollow & Crown Barber Co.",
+  "telephone": "+1-408-555-0177",
+  "address": {"@type": "PostalAddress", "addressLocality": "San Jose", "addressRegion": "CA"},
+  "url": "https://example.com",
+  "sameAs": ["https://instagram.com/hollowandcrown"]
+}
+</script>
+<style>
+  :root{
+    --ivory:#f4efe6;
+    --ivory-2:#ede6d8;
+    --ink:#1c1a17;
+    --ink-soft:#5c554a;
+    --rule:#d5cbb8;
+    --pole:#9e2b25;
+    --pole-dark:#7e211c;
+    --gilt:#a3803c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:'Work Sans',-apple-system,sans-serif;
+    background:var(--ivory);color:var(--ink);
+    font-size:17px;line-height:1.65;
+  }
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;line-height:1.1}
+  img{max-width:100%;display:block}
+  a{color:var(--pole)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+
+  /* showroom ribbon */
+  .demo-ribbon{
+    background:var(--ink);color:#cfc6b6;text-align:center;
+    font-size:.8rem;letter-spacing:.06em;padding:8px 16px;
+  }
+  .demo-ribbon a{color:#fff;font-weight:600;text-decoration:underline}
+
+  /* masthead */
+  .masthead{
+    text-align:center;padding:56px 22px 42px;
+    border-bottom:3px double var(--rule);
+  }
+  .masthead .est{font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft)}
+  .masthead h1{font-size:clamp(2.6rem,8vw,4.6rem);font-weight:700;margin:12px 0 6px}
+  .masthead h1 .amp{font-style:italic;color:var(--pole)}
+  .masthead .sub{font-size:.92rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .mast-nav{margin-top:26px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .mast-nav a{
+    color:var(--ink);text-decoration:none;font-size:.85rem;letter-spacing:.1em;
+    text-transform:uppercase;padding:9px 18px;border:1px solid var(--rule);border-radius:3px;
+  }
+  .mast-nav a:hover{border-color:var(--pole);color:var(--pole)}
+  .mast-nav a.hot{background:var(--pole);border-color:var(--pole);color:var(--ivory);font-weight:600}
+  .mast-nav a.hot:hover{background:var(--pole-dark)}
+
+  .band{
+    /* CHANGE: swap photos per client */
+    height:min(48vh,420px);
+    background:url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=70') center/cover no-repeat;
+    border-bottom:3px double var(--rule);
+    filter:sepia(.12) saturate(.9);
+  }
+  .band.b2{background-image:url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1600&q=70')}
+
+  section{padding:72px 0}
+  .kick{text-align:center;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gilt);margin-bottom:10px}
+  .sec-title{text-align:center;font-size:clamp(1.8rem,4.5vw,2.7rem);font-weight:700;margin-bottom:12px}
+  .sec-sub{text-align:center;color:var(--ink-soft);max-width:36em;margin:0 auto 44px}
+
+  /* price book */
+  .book{max-width:600px;margin:0 auto}
+  .book-cat{
+    text-align:center;font-family:'Playfair Display';font-style:italic;font-weight:600;
+    font-size:1.15rem;color:var(--ink-soft);margin:42px 0 16px;
+  }
+  .book-cat:first-child{margin-top:0}
+  .svc{display:flex;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule)}
+  .svc .n{font-weight:600}
+  .svc .n small{display:block;font-weight:400;color:var(--ink-soft);font-size:.85rem}
+  .svc .sp{flex:1}
+  .svc .p{font-family:'Playfair Display';font-weight:700;font-size:1.2rem;color:var(--pole);white-space:nowrap}
+  .book-note{text-align:center;color:var(--ink-soft);font-size:.9rem;margin-top:36px;font-style:italic}
+
+  /* chairs — the barbers */
+  .chairs{background:var(--ivory-2);border-top:3px double var(--rule);border-bottom:3px double var(--rule)}
+  .chair-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:860px;margin:0 auto}
+  @media(max-width:820px){.chair-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.chair-grid{grid-template-columns:1fr}}
+  .chair{
+    background:var(--ivory);border:1px solid var(--rule);border-radius:4px;
+    padding:22px 18px;text-align:center;
+  }
+  .chair .no{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gilt)}
+  .chair h3{font-size:1.25rem;margin:6px 0 4px}
+  .chair p{font-size:.86rem;color:var(--ink-soft)}
+  .chair .since{margin-top:10px;font-size:.78rem;color:var(--ink-soft);font-style:italic}
+
+  /* reviews */
+  .quote-wrap{max-width:660px;margin:0 auto;text-align:center}
+  .quote-mark{font-family:'Playfair Display';font-size:4rem;color:var(--pole);line-height:.5;display:block;margin-bottom:16px}
+  blockquote{font-size:clamp(1.1rem,2.4vw,1.35rem);line-height:1.55;font-weight:500}
+  .quote-by{margin-top:16px;color:var(--ink-soft);font-size:.88rem;letter-spacing:.08em;text-transform:uppercase}
+  .quote-row{display:flex;justify-content:center;gap:10px;margin-top:32px;flex-wrap:wrap}
+  .quote-chip{font-size:.83rem;color:var(--ink-soft);border:1px solid var(--rule);border-radius:99px;padding:7px 15px}
+  .quote-chip b{color:var(--pole);font-weight:600}
+
+  /* hours + visit */
+  .visit{background:var(--ivory-2);border-top:3px double var(--rule)}
+  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;max-width:820px;margin:0 auto}
+  @media(max-width:700px){.visit-grid{grid-template-columns:1fr}}
+  .hours h3,.find h3{font-size:1.3rem;margin-bottom:14px}
+  .hours table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .hours td{padding:8px 4px;border-bottom:1px solid var(--rule);font-size:.95rem}
+  .hours td:last-child{text-align:right;font-weight:500}
+  .hours .closed td:last-child{color:var(--ink-soft);font-style:italic;font-weight:400}
+  .find p{color:var(--ink-soft);margin-bottom:14px;font-size:.95rem}
+  .find .addr{font-weight:600;color:var(--ink);font-size:1.05rem}
+  .btn{
+    display:inline-block;background:var(--pole);color:var(--ivory);text-decoration:none;
+    font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.9rem;
+    padding:14px 26px;border:none;border-radius:3px;cursor:pointer;
+  }
+  .btn:hover{background:var(--pole-dark)}
+  .btn.line{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+  .btn.line:hover{background:var(--ink);color:var(--ivory)}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+
+  /* shop gallery */
+  .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:920px;margin:0 auto}
+  @media(max-width:760px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+  .gal{height:200px;background:center/cover no-repeat;border-radius:4px;border:1px solid var(--rule);filter:sepia(.1) saturate(.92)}
+  /* CHANGE: swap gallery photos per client */
+  .gal.g1{background-image:url('https://images.unsplash.com/photo-1521490878406-4b7d2a4c9b48?w=900&q=70')}
+  .gal.g2{background-image:url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=70')}
+  .gal.g3{background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=900&q=70')}
+  .gal.g4{background-image:url('https://images.unsplash.com/photo-1512690459411-b9245aed614b?w=900&q=70')}
+
+  /* sticky booking bar — mobile only */
+  .book-bar{
+    display:none;position:fixed;left:0;right:0;bottom:0;z-index:20;
+    background:var(--ink);padding:10px 14px;gap:10px;
+    box-shadow:0 -3px 12px rgba(28,26,23,.25);
+  }
+  .book-bar a{
+    flex:1;text-align:center;text-decoration:none;font-weight:600;font-size:.9rem;
+    letter-spacing:.05em;text-transform:uppercase;padding:12px 10px;border-radius:3px;
+  }
+  .book-bar .bb-book{background:var(--pole);color:var(--ivory)}
+  .book-bar .bb-call{background:transparent;color:var(--ivory);border:1px solid #4a463f}
+  @media(max-width:700px){
+    .book-bar{display:flex}
+    body{padding-bottom:64px}
+  }
+
+  footer{border-top:3px double var(--rule);padding:28px 0;text-align:center;color:var(--ink-soft);font-size:.85rem}
+  footer .sock a{color:var(--ink);text-decoration:none;margin:0 10px;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem}
+  footer .sock a:hover{color:var(--pole)}
+  footer .sock{margin-bottom:8px}
+  footer .credit a{color:var(--ink-soft)}
+
+  :focus-visible{outline:2px solid var(--gilt);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">One of five demo sites by <a href="index.html">Sites by Ant — see the rest</a></div>
+
+<header class="masthead">
+  <div class="est">Est. 2019 · Willow Glen, San Jose</div>
+  <h1>Hollow <span class="amp">&amp;</span> Crown</h1>
+  <div class="sub">Barber Co. · Four Chairs · No Rush</div>
+  <nav class="mast-nav">
+    <a href="#services">Services</a>
+    <a href="#chairs">The barbers</a>
+    <a href="#visit">Hours &amp; visit</a>
+    <!-- CHANGE: point at the client's real booking link (Booksy, Square, etc.) -->
+    <a class="hot" href="#visit">Book a chair</a>
+  </nav>
+</header>
+
+<div class="band" role="img" aria-label="Barber working a fade at the chair"></div>
+
+<main>
+
+<section id="services">
+  <div class="wrap">
+    <div class="kick">The book</div>
+    <h2 class="sec-title">Services &amp; prices</h2>
+    <p class="sec-sub">Every cut ends the same way: hot towel, straight-razor neck shave, and a look in the mirror you're happy with.</p>
+    <div class="book">
+      <div class="book-cat">Cuts</div>
+      <div class="svc"><span class="n">Classic cut<small>scissor or clipper, wash included</small></span><span class="sp"></span><span class="p">$38</span></div>
+      <div class="svc"><span class="n">Skin fade<small>zero gap, blended to the top</small></span><span class="sp"></span><span class="p">$42</span></div>
+      <div class="svc"><span class="n">Buzz &amp; clean-up<small>one guard all over, edged sharp</small></span><span class="sp"></span><span class="p">$28</span></div>
+      <div class="svc"><span class="n">Kids under 12<small>weekdays before 4pm</small></span><span class="sp"></span><span class="p">$24</span></div>
+
+      <div class="book-cat">Beard &amp; shave</div>
+      <div class="svc"><span class="n">Beard shape-up<small>lined, faded, oiled</small></span><span class="sp"></span><span class="p">$20</span></div>
+      <div class="svc"><span class="n">Hot-towel shave<small>lather, straight razor, thirty unhurried minutes</small></span><span class="sp"></span><span class="p">$45</span></div>
+      <div class="svc"><span class="n">The full works<small>cut, shave, and nothing on your calendar for an hour</small></span><span class="sp"></span><span class="p">$75</span></div>
+    </div>
+    <p class="book-note">Cash, card, and tap. Gray hair costs the same as the rest.</p>
+  </div>
+</section>
+
+<section id="chairs" class="chairs">
+  <div class="wrap">
+    <div class="kick">The roster</div>
+    <h2 class="sec-title">Four chairs, four barbers</h2>
+    <p class="sec-sub">Book whoever you like — or take the first chair open. Nobody here is precious about it.</p>
+    <div class="chair-grid">
+      <!-- CHANGE: real barber names, specialties, start years -->
+      <div class="chair">
+        <div class="no">Chair One</div>
+        <h3>Marco</h3>
+        <p>Skin fades, sharp lines. The reason half the shop's Instagram exists.</p>
+        <div class="since">Cutting since 2011</div>
+      </div>
+      <div class="chair">
+        <div class="no">Chair Two</div>
+        <h3>Dee</h3>
+        <p>Scissor work and longer cuts. Ask for texture, leave with texture.</p>
+        <div class="since">Cutting since 2015</div>
+      </div>
+      <div class="chair">
+        <div class="no">Chair Three</div>
+        <h3>Sal</h3>
+        <p>Owner. Classic cuts and hot-towel shaves, done the slow way.</p>
+        <div class="since">Cutting since 2004</div>
+      </div>
+      <div class="chair">
+        <div class="no">Chair Four</div>
+        <h3>Jules</h3>
+        <p>Beards. If it grows on a face, Jules can make it behave.</p>
+        <div class="since">Cutting since 2018</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band b2" role="img" aria-label="Inside the shop — chairs, mirrors, and the pole"></div>
+
+<section>
+  <div class="wrap quote-wrap">
+    <div class="kick">Word of mouth</div>
+    <span class="quote-mark">&ldquo;</span>
+    <!-- CHANGE: the single best real Google review, verbatim -->
+    <blockquote>Been chasing a decent fade around San Jose for years. Walked out of here and my wife asked where I'd been going all this time. Booked my next one from the parking lot.</blockquote>
+    <div class="quote-by">Devon C — Google review</div>
+    <div class="quote-row">
+      <!-- CHANGE: pull the live numbers from their Google profile -->
+      <span class="quote-chip"><b>4.8★</b> on Google · 240+ reviews</span>
+      <span class="quote-chip"><b>Most booked:</b> Saturday mornings</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kick">The room</div>
+    <h2 class="sec-title">Inside the shop</h2>
+    <p class="sec-sub">Checkered floor, worn leather, and the good kind of quiet. The pole outside is original.</p>
+    <div class="gal-grid">
+      <div class="gal g1" role="img" aria-label="Barber chair by the window"></div>
+      <div class="gal g2" role="img" aria-label="Tools laid out on the station"></div>
+      <div class="gal g3" role="img" aria-label="Hot-towel shave in progress"></div>
+      <div class="gal g4" role="img" aria-label="The shop front at dusk"></div>
+    </div>
+  </div>
+</section>
+
+<section id="visit" class="visit">
+  <div class="wrap">
+    <div class="kick">Come by</div>
+    <h2 class="sec-title">Hours &amp; the shop</h2>
+    <div class="visit-grid">
+      <div class="hours">
+        <h3>Hours</h3>
+        <!-- CHANGE: real hours -->
+        <table>
+          <tr><td>Tuesday – Friday</td><td>9am – 7pm</td></tr>
+          <tr><td>Saturday</td><td>8am – 5pm</td></tr>
+          <tr><td>Sunday</td><td>10am – 3pm</td></tr>
+          <tr class="closed"><td>Monday</td><td>Closed — barbers rest too</td></tr>
+        </table>
+      </div>
+      <div class="find">
+        <h3>Find us</h3>
+        <!-- CHANGE: real address, booking link, phone -->
+        <p class="addr">1184 Lincoln Ave, Willow Glen<br>San Jose, CA 95125</p>
+        <p>Street parking on Lincoln, lot around back. Walk-ins welcome when the book allows — booking is the sure thing.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://example.com" rel="noopener">Book online</a>
+          <a class="btn line" href="tel:+14085550177">(408) 555-0177</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- CHANGE: real booking link + phone -->
+<div class="book-bar">
+  <a class="bb-book" href="https://example.com" rel="noopener">Book a chair</a>
+  <a class="bb-call" href="tel:+14085550177">Call the shop</a>
+</div>
+
+<footer>
+  <div class="sock">
+    <a href="https://instagram.com/" rel="noopener">Instagram</a>
+    <a href="tel:+14085550177">Call</a>
+  </div>
+  <div>© 2026 Hollow &amp; Crown Barber Co. · San Jose, CA</div>
+  <div class="credit"><a href="https://sitesbyant.com" rel="noopener">Site by Ant</a></div>
+</footer>
+
+</body>
+</html>

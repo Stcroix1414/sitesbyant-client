@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     SITES BY ANT — CLIENT DEMO (boutique / retail variant)
+     Demo business: "Golden Hour Goods" (fictional)
+     Visual system: warm shop-window light. Soft blush paper,
+     plum ink, honey accent. Italic serif display, gentle pace.
+     Product grid stands in for the Instagram feed.
+     Search CHANGE: for every per-client swap point.
+     ============================================================ -->
+<title>Golden Hour Goods — Vintage &amp; Gift Shop | Downtown Campbell</title>
+<meta name="description" content="A small vintage and gift shop in downtown Campbell. New finds weekly, gift wrapping always free. See what just came in, plus hours and directions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Golden Hour Goods",
+  "telephone": "+1-408-555-0163",
+  "address": {"@type": "PostalAddress", "addressLocality": "Campbell", "addressRegion": "CA"},
+  "url": "https://example.com",
+  "sameAs": ["https://instagram.com/goldenhourgoods"]
+}
+</script>
+<style>
+  :root{
+    --blush:#faf5ef;
+    --blush-2:#f3eae0;
+    --plum:#4a2c3a;
+    --plum-soft:#7d6270;
+    --rule:#e2d5c8;
+    --honey:#b0713f;
+    --honey-dark:#94592c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:'Karla',-apple-system,sans-serif;
+    background:var(--blush);color:var(--plum);
+    font-size:17px;line-height:1.65;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.1;font-weight:600}
+  img{max-width:100%;display:block}
+  a{color:var(--honey)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+  /* showroom ribbon */
+  .demo-ribbon{
+    background:var(--plum);color:#d9c8d1;text-align:center;
+    font-size:.8rem;letter-spacing:.06em;padding:8px 16px;
+  }
+  .demo-ribbon a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* masthead */
+  .masthead{text-align:center;padding:54px 22px 40px;border-bottom:1px solid var(--rule)}
+  .masthead .est{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--plum-soft)}
+  .masthead h1{font-size:clamp(2.4rem,7.5vw,4.2rem);margin:12px 0 6px;font-style:italic}
+  .masthead h1 b{font-style:normal;color:var(--honey);font-weight:700}
+  .masthead .sub{font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;color:var(--plum-soft)}
+  .mast-nav{margin-top:26px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .mast-nav a{
+    color:var(--plum);text-decoration:none;font-size:.85rem;letter-spacing:.1em;
+    text-transform:uppercase;padding:9px 18px;border:1px solid var(--rule);border-radius:99px;
+  }
+  .mast-nav a:hover{border-color:var(--honey);color:var(--honey)}
+  .mast-nav a.hot{background:var(--honey);border-color:var(--honey);color:var(--blush);font-weight:700}
+  .mast-nav a.hot:hover{background:var(--honey-dark)}
+
+  .band{
+    /* CHANGE: swap photos per client */
+    height:min(46vh,400px);
+    background:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=70') center/cover no-repeat;
+    border-bottom:1px solid var(--rule);
+    filter:saturate(.9) sepia(.06);
+  }
+
+  section{padding:70px 0}
+  .kick{text-align:center;font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--honey);margin-bottom:10px;font-weight:700}
+  .sec-title{text-align:center;font-size:clamp(1.7rem,4.3vw,2.6rem);margin-bottom:12px}
+  .sec-title em{color:var(--honey)}
+  .sec-sub{text-align:center;color:var(--plum-soft);max-width:36em;margin:0 auto 44px}
+
+  /* category filter */
+  .filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+  .filter-btn{
+    font:inherit;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+    color:var(--plum-soft);background:transparent;border:1px solid var(--rule);border-radius:99px;
+    padding:8px 18px;cursor:pointer;
+  }
+  .filter-btn:hover{border-color:var(--honey);color:var(--honey)}
+  .filter-btn[aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:var(--blush)}
+  .find.hide{display:none}
+
+  /* new arrivals — the IG-feed stand-in */
+  .finds{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.finds{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.finds{grid-template-columns:1fr}}
+  .find{
+    background:#fff;border:1px solid var(--rule);border-radius:8px;overflow:hidden;
+  }
+  .find .ph{height:210px;background:center/cover no-repeat;filter:saturate(.92)}
+  /* CHANGE: swap product photos weekly — mirror the IG feed */
+  .find.f1 .ph{background-image:url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=900&q=70')}
+  .find.f2 .ph{background-image:url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=900&q=70')}
+  .find.f3 .ph{background-image:url('https://images.unsplash.com/photo-1487700160041-babef9c3cb55?w=900&q=70')}
+  .find.f4 .ph{background-image:url('https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=900&q=70')}
+  .find.f5 .ph{background-image:url('https://images.unsplash.com/photo-1452457807411-4979b707c5be?w=900&q=70')}
+  .find.f6 .ph{background-image:url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=900&q=70')}
+  .find .fb{padding:16px 18px}
+  .find h3{font-size:1.02rem;margin-bottom:3px}
+  .find p{font-size:.86rem;color:var(--plum-soft)}
+  .find .tag{
+    display:inline-block;margin-top:10px;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--honey);font-weight:700;
+  }
+  .finds-note{text-align:center;margin-top:34px;color:var(--plum-soft);font-size:.92rem}
+  .finds-note a{font-weight:700}
+
+  /* story */
+  .story{background:var(--blush-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .story .pull{
+    font-family:'Fraunces';font-style:italic;font-weight:600;
+    font-size:clamp(1.4rem,3.6vw,2rem);line-height:1.3;text-align:center;
+    max-width:22em;margin:0 auto 28px;
+  }
+  .story .pull b{font-style:normal;color:var(--honey);font-weight:700}
+  .story-cols{max-width:580px;margin:0 auto;color:#6b5462}
+  .story-cols p{margin-bottom:16px}
+
+  /* review */
+  .quote-wrap{max-width:640px;margin:0 auto;text-align:center}
+  .quote-mark{font-family:'Fraunces';font-size:4rem;color:var(--honey);line-height:.5;display:block;margin-bottom:16px}
+  blockquote{font-size:clamp(1.08rem,2.3vw,1.3rem);line-height:1.55;font-weight:500}
+  .quote-by{margin-top:16px;color:var(--plum-soft);font-size:.86rem;letter-spacing:.08em;text-transform:uppercase}
+  .quote-row{display:flex;justify-content:center;gap:10px;margin-top:30px;flex-wrap:wrap}
+  .quote-chip{font-size:.83rem;color:var(--plum-soft);border:1px solid var(--rule);border-radius:99px;padding:7px 15px;background:#fff}
+  .quote-chip b{color:var(--honey);font-weight:700}
+
+  /* visit */
+  .visit{background:var(--blush-2);border-top:1px solid var(--rule)}
+  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;max-width:800px;margin:0 auto}
+  @media(max-width:700px){.visit-grid{grid-template-columns:1fr}}
+  .hours h3,.findus h3{font-size:1.35rem;margin-bottom:14px;font-style:italic}
+  .hours table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .hours td{padding:8px 4px;border-bottom:1px solid var(--rule);font-size:.95rem}
+  .hours td:last-child{text-align:right;font-weight:500}
+  .hours .closed td:last-child{color:var(--plum-soft);font-style:italic;font-weight:400}
+  .findus p{color:#6b5462;margin-bottom:14px;font-size:.95rem}
+  .findus .addr{font-weight:700;color:var(--plum);font-size:1.05rem}
+  .btn{
+    display:inline-block;background:var(--honey);color:#fff;text-decoration:none;
+    font-weight:700;letter-spacing:.04em;font-size:.95rem;
+    padding:13px 24px;border-radius:99px;
+  }
+  .btn:hover{background:var(--honey-dark)}
+  .btn.line{background:transparent;color:var(--plum);border:1.5px solid var(--plum)}
+  .btn.line:hover{background:var(--plum);color:var(--blush)}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+
+  /* mailing list */
+  .list-sec{text-align:center}
+  .list-form{display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+  .list-form input{
+    flex:1;min-width:220px;background:#fff;border:1px solid var(--rule);border-radius:99px;
+    color:var(--plum);font:inherit;font-size:.95rem;padding:13px 20px;
+  }
+  .list-form input:focus{outline:2px solid var(--honey);outline-offset:1px;border-color:transparent}
+  .list-note{margin-top:14px;font-size:.82rem;color:var(--plum-soft);font-style:italic}
+
+  footer{border-top:1px solid var(--rule);padding:28px 0;text-align:center;color:var(--plum-soft);font-size:.85rem}
+  footer .sock{margin-bottom:8px}
+  footer .sock a{color:var(--plum);text-decoration:none;margin:0 10px;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem}
+  footer .sock a:hover{color:var(--honey)}
+  footer .credit a{color:var(--plum-soft)}
+
+  :focus-visible{outline:2px solid var(--honey);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">One of five demo sites by <a href="index.html">Sites by Ant — see the rest</a></div>
+
+<header class="masthead">
+  <div class="est">Downtown Campbell, California</div>
+  <h1>Golden Hour <b>Goods</b></h1>
+  <div class="sub">Vintage · Gifts · Small Wonders</div>
+  <nav class="mast-nav">
+    <a href="#finds">Just came in</a>
+    <a href="#story">The shop</a>
+    <a href="#visit">Hours &amp; visit</a>
+    <!-- CHANGE: real Instagram -->
+    <a class="hot" href="https://instagram.com/" rel="noopener">Follow along</a>
+  </nav>
+</header>
+
+<div class="band" role="img" aria-label="Inside the shop — shelves of vintage glassware and gifts in warm light"></div>
+
+<main>
+
+<section id="finds">
+  <div class="wrap">
+    <div class="kick">This week</div>
+    <h2 class="sec-title">Just came <em>in</em></h2>
+    <p class="sec-sub">The shop turns over every week — what you see below is what's on the shelves right now. When it's gone, it's gone.</p>
+    <div class="filters" role="group" aria-label="Filter finds by category">
+      <button class="filter-btn" data-cat="all" aria-pressed="true">Everything</button>
+      <button class="filter-btn" data-cat="vintage" aria-pressed="false">Vintage</button>
+      <button class="filter-btn" data-cat="local" aria-pressed="false">Local makers</button>
+      <button class="filter-btn" data-cat="ooak" aria-pressed="false">One of a kind</button>
+    </div>
+    <div class="finds">
+      <!-- CHANGE: rotate weekly with the IG feed — photo, name, note -->
+      <div class="find f1" data-cat="vintage">
+        <div class="ph" role="img" aria-label="Amber glass vases in afternoon light"></div>
+        <div class="fb"><h3>Amber glass, five ways</h3><p>A whole shelf of 70s amber — vases, tumblers, one very dramatic decanter.</p><span class="tag">Vintage</span></div>
+      </div>
+      <div class="find f2" data-cat="vintage">
+        <div class="ph" role="img" aria-label="Stack of woven blankets"></div>
+        <div class="fb"><h3>Wool camp blankets</h3><p>Three heavyweight stripes, freshly cleaned. Cabin optional.</p><span class="tag">Vintage</span></div>
+      </div>
+      <div class="find f3" data-cat="local">
+        <div class="ph" role="img" aria-label="Shelf of candles and ceramics"></div>
+        <div class="fb"><h3>Hand-poured candles</h3><p>From a maker two towns over. The fig one goes first, every time.</p><span class="tag">Local maker</span></div>
+      </div>
+      <div class="find f4" data-cat="ooak">
+        <div class="ph" role="img" aria-label="Botanical prints in frames"></div>
+        <div class="fb"><h3>Botanical prints, framed</h3><p>Pulled from a 1940s field guide, framed simply. Eight left.</p><span class="tag">One of a kind</span></div>
+      </div>
+      <div class="find f5" data-cat="vintage">
+        <div class="ph" role="img" aria-label="Vintage cameras on a shelf"></div>
+        <div class="fb"><h3>Film cameras that work</h3><p>Tested with a roll before they hit the shelf. Ask for the sample photos.</p><span class="tag">Vintage</span></div>
+      </div>
+      <div class="find f6" data-cat="local">
+        <div class="ph" role="img" aria-label="Wrapped gifts with ribbon"></div>
+        <div class="fb"><h3>Gift wrapping, free</h3><p>Every purchase, every day — not just in December. Tell us who it's for.</p><span class="tag">Always</span></div>
+      </div>
+    </div>
+    <p class="finds-note">New finds land most Thursdays — <a href="https://instagram.com/" rel="noopener">the Instagram</a> sees them first.</p>
+  </div>
+</section>
+
+<section id="story" class="story">
+  <div class="wrap">
+    <div class="kick">The shop</div>
+    <p class="pull">Everything in here was picked up, turned over, and <b>loved a little</b> before it went on the shelf.</p>
+    <div class="story-cols">
+      <p>Golden Hour started as a garage-sale habit that outgrew the garage. Now it's four hundred square feet on Campbell Ave where the inventory changes weekly and nothing is sorted quite alphabetically.</p>
+      <p>Half the shop is vintage — glassware, textiles, cameras, the occasional chair that's hard to say goodbye to. The other half is new work from local makers: candles, cards, ceramics, small-batch everything.</p>
+      <p>Come in to find a gift; stay because the light in here at 5pm is exactly what the name promises.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap quote-wrap">
+    <div class="kick">Word of mouth</div>
+    <span class="quote-mark">&ldquo;</span>
+    <!-- CHANGE: the single best real Google review, verbatim -->
+    <blockquote>My entire gift-giving reputation is built on this store. I come in saying "it's for my mother-in-law, she's impossible" and walk out ten minutes later a hero.</blockquote>
+    <div class="quote-by">Lena M — Google review</div>
+    <div class="quote-row">
+      <!-- CHANGE: pull the live numbers from their Google profile -->
+      <span class="quote-chip"><b>4.9★</b> on Google · 150+ reviews</span>
+      <span class="quote-chip"><b>Free</b> gift wrap, always</span>
+    </div>
+  </div>
+</section>
+
+<section id="visit" class="visit">
+  <div class="wrap">
+    <div class="kick">Come by</div>
+    <h2 class="sec-title">Hours &amp; the corner we're on</h2>
+    <div class="visit-grid" style="margin-top:44px">
+      <div class="hours">
+        <h3>Hours</h3>
+        <!-- CHANGE: real hours -->
+        <table>
+          <tr><td>Wednesday – Friday</td><td>11am – 6pm</td></tr>
+          <tr><td>Saturday</td><td>10am – 6pm</td></tr>
+          <tr><td>Sunday</td><td>11am – 4pm</td></tr>
+          <tr class="closed"><td>Monday – Tuesday</td><td>Out hunting for the shop</td></tr>
+        </table>
+      </div>
+      <div class="findus">
+        <h3>Find us</h3>
+        <!-- CHANGE: real address & phone -->
+        <p class="addr">372 E Campbell Ave<br>Campbell, CA 95008</p>
+        <p>Between the bookshop and the coffee place with the good scones. Free lot behind the block, two hours.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://maps.google.com" rel="noopener">Get directions</a>
+          <a class="btn line" href="tel:+14085550163">(408) 555-0163</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="list-sec">
+  <div class="wrap">
+    <div class="kick">First dibs</div>
+    <h2 class="sec-title">The Thursday <em>list</em></h2>
+    <p class="sec-sub">One email a week, photos of what just came in, sent before it hits the shelves. The good amber glass never survives the weekend.</p>
+    <!-- CHANGE: real Formspree / mailing list endpoint -->
+    <form class="list-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address">
+      <button class="btn" type="submit">Join the list</button>
+    </form>
+    <p class="list-note">No sales pitches, no daily drips — just Thursday, just the finds.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="sock">
+    <a href="https://instagram.com/" rel="noopener">Instagram</a>
+    <a href="tel:+14085550163">Call</a>
+  </div>
+  <div>© 2026 Golden Hour Goods · Campbell, CA</div>
+  <div class="credit"><a href="https://sitesbyant.com" rel="noopener">Site by Ant</a></div>
+</footer>
+
+<script>
+  // Category filter for the finds grid
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.find');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    cards.forEach(card => {
+      card.classList.toggle('hide', cat !== 'all' && card.dataset.cat !== cat);
+    });
+  }));
+</script>
+
+</body>
+</html>

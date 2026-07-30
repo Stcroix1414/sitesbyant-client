@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     SITES BY ANT — CLIENT DEMO (contractor / landscaping variant)
+     Demo business: "Ironwood Landscape Co." (fictional)
+     Visual system: field notebook meets job-site signage. Deep
+     moss green, stone, ochre accent. Heavy grotesque display.
+     Trust signals up front: license, insurance, years, area.
+     Search CHANGE: for every per-client swap point.
+     ============================================================ -->
+<title>Ironwood Landscape Co. — Design, Build &amp; Maintain | South Bay</title>
+<meta name="description" content="Landscape design, hardscape, and yard maintenance across the South Bay. Licensed and insured. See finished projects and request a free on-site quote.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LandscapeArchitect",
+  "name": "Ironwood Landscape Co.",
+  "telephone": "+1-408-555-0152",
+  "areaServed": ["San Jose", "Campbell", "Los Gatos", "Saratoga", "Cupertino"],
+  "url": "https://example.com"
+}
+</script>
+<style>
+  :root{
+    --moss:#2e3b2f;
+    --moss-2:#26312a;
+    --stone:#eff1ea;
+    --stone-2:#e2e5da;
+    --bark:#3d4a3e;
+    --rule:#c9cec0;
+    --ochre:#d9a441;
+    --ochre-dark:#b8862c;
+    --ink:#242b24;
+    --ink-soft:#5a6459;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:'Source Sans 3',-apple-system,sans-serif;
+    background:var(--stone);color:var(--ink);
+    font-size:17px;line-height:1.65;
+  }
+  h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.01em}
+  img{max-width:100%;display:block}
+  a{color:var(--bark)}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+
+  /* showroom ribbon */
+  .demo-ribbon{
+    background:var(--moss-2);color:#b9c2b4;text-align:center;
+    font-size:.8rem;letter-spacing:.06em;padding:8px 16px;
+  }
+  .demo-ribbon a{color:#fff;font-weight:600;text-decoration:underline}
+
+  /* topbar */
+  .topbar{background:var(--moss);color:var(--stone)}
+  .topbar .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-family:'Archivo';font-weight:800;text-transform:uppercase;font-size:1.1rem;color:var(--stone);text-decoration:none;letter-spacing:.02em}
+  .brand b{color:var(--ochre)}
+  .nav-links{display:flex;gap:22px;align-items:center}
+  .nav-links a{color:#c6cfc0;text-decoration:none;font-size:.92rem;font-weight:500}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{background:var(--ochre);color:var(--moss-2) !important;padding:10px 16px;border-radius:4px;font-weight:700}
+  .nav-cta:hover{background:var(--ochre-dark)}
+  @media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* hero */
+  .hero{
+    background:var(--moss);color:var(--stone);
+    padding:70px 0 0;
+  }
+  .hero-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end}
+  @media(max-width:820px){.hero-inner{grid-template-columns:1fr}}
+  .hero .lic{
+    display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ochre);border:1px solid rgba(217,164,65,.4);border-radius:3px;
+    padding:5px 12px;margin-bottom:18px;font-weight:600;
+  }
+  .hero h1{font-size:clamp(2.2rem,5.8vw,3.6rem);font-weight:800;text-transform:uppercase;margin-bottom:16px}
+  .hero h1 em{font-style:normal;color:var(--ochre)}
+  .hero p{color:#c6cfc0;max-width:30em;margin-bottom:28px;font-size:1.08rem}
+  .hero .btn-row{display:flex;gap:14px;flex-wrap:wrap;padding-bottom:56px}
+  .btn{
+    display:inline-block;background:var(--ochre);color:var(--moss-2);text-decoration:none;
+    font-weight:700;padding:14px 24px;border-radius:4px;font-size:1rem;border:none;cursor:pointer;font-family:inherit;
+  }
+  .btn:hover{background:var(--ochre-dark)}
+  .btn.line{background:transparent;color:var(--stone);border:1.5px solid #5c6a5c}
+  .btn.line:hover{border-color:var(--stone)}
+  .hero-photo{
+    height:100%;min-height:300px;
+    background:url('https://images.unsplash.com/photo-1558904541-efa843a96f01?w=1400&q=70') center/cover no-repeat;
+    border-radius:6px 6px 0 0;
+  }
+  @media(max-width:820px){.hero-photo{min-height:230px}}
+
+  /* stats strip */
+  .strip{background:var(--moss-2);color:var(--stone)}
+  .strip-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:26px 0}
+  @media(max-width:700px){.strip-row{grid-template-columns:repeat(2,1fr)}}
+  .stat{text-align:center}
+  .stat b{display:block;font-family:'Archivo';font-weight:800;font-size:1.7rem;color:var(--ochre);font-variant-numeric:tabular-nums}
+  .stat span{font-size:.82rem;color:#b9c2b4;letter-spacing:.06em;text-transform:uppercase}
+
+  section{padding:74px 0}
+  .kick{font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ochre-dark);margin-bottom:10px;font-weight:600}
+  .sec-title{font-size:clamp(1.7rem,4.2vw,2.5rem);font-weight:800;text-transform:uppercase;margin-bottom:12px}
+  .sec-sub{color:var(--ink-soft);max-width:38em;margin-bottom:44px}
+
+  /* services */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:760px){.svc-grid{grid-template-columns:1fr}}
+  .svc-card{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:26px;border-top:4px solid var(--moss)}
+  .svc-card h3{font-size:1.1rem;text-transform:uppercase;margin-bottom:10px}
+  .svc-card p{font-size:.94rem;color:var(--ink-soft)}
+  .svc-card ul{list-style:none;margin-top:12px}
+  .svc-card li{font-size:.9rem;color:var(--ink-soft);padding:5px 0;border-top:1px solid var(--stone-2)}
+  .svc-card li::before{content:"— ";color:var(--ochre-dark)}
+
+  /* projects */
+  .projects{background:var(--stone-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.proj-grid{grid-template-columns:1fr}}
+  .proj{background:#fff;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+  .proj .ph{height:200px;background:center/cover no-repeat}
+  /* CHANGE: swap project photos per client */
+  .proj.p1 .ph{background-image:url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1000&q=70')}
+  .proj.p2 .ph{background-image:url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1000&q=70')}
+  .proj.p3 .ph{background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=70')}
+  .proj .pb{padding:18px 20px}
+  .proj .loc{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre-dark);font-weight:600}
+  .proj h3{font-size:1.05rem;margin:5px 0 6px}
+  .proj p{font-size:.9rem;color:var(--ink-soft)}
+
+  /* review */
+  .quote-wrap{max-width:680px;margin:0 auto;text-align:center}
+  .quote-wrap .kick{text-align:center}
+  blockquote{font-size:clamp(1.1rem,2.4vw,1.4rem);line-height:1.5;font-weight:500}
+  .quote-by{margin-top:16px;color:var(--ink-soft);font-size:.88rem;letter-spacing:.08em;text-transform:uppercase}
+  .quote-row{display:flex;justify-content:center;gap:10px;margin-top:30px;flex-wrap:wrap}
+  .quote-chip{font-size:.83rem;color:var(--ink-soft);border:1px solid var(--rule);border-radius:99px;padding:7px 15px;background:#fff}
+  .quote-chip b{color:var(--ochre-dark);font-weight:700}
+
+  /* area + quote form */
+  .quote-sec{background:var(--moss);color:var(--stone)}
+  .quote-sec .kick{color:var(--ochre)}
+  .quote-sec .sec-title{color:var(--stone)}
+  .quote-sec .sec-sub{color:#c6cfc0}
+  .q-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:48px}
+  @media(max-width:760px){.q-grid{grid-template-columns:1fr}}
+  .area h3{font-size:1.05rem;text-transform:uppercase;color:var(--ochre);margin-bottom:12px}
+  .area ul{list-style:none;columns:2;font-size:.96rem;color:#c6cfc0}
+  .area li{padding:5px 0}
+  .area p{margin-top:16px;font-size:.9rem;color:#9aa795}
+  .quote-sec label{display:block;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:#c6cfc0;margin-bottom:6px;font-weight:600}
+  .quote-sec input,.quote-sec textarea{
+    width:100%;background:var(--moss-2);border:1px solid #4a584a;border-radius:4px;
+    color:var(--stone);font:inherit;font-size:.96rem;padding:12px 14px;margin-bottom:16px;
+  }
+  .quote-sec input:focus,.quote-sec textarea:focus{outline:2px solid var(--ochre);outline-offset:1px;border-color:transparent}
+  .or-call{margin-top:20px;font-size:.92rem;color:#9aa795}
+  .or-call a{color:var(--ochre);font-weight:700;font-size:1.15rem;text-decoration:none;font-family:'Archivo'}
+
+  /* before / after slider */
+  .ba{max-width:860px;margin:0 auto}
+  .ba-frame{
+    position:relative;height:min(56vh,460px);border-radius:6px;overflow:hidden;
+    border:1px solid var(--rule);user-select:none;
+  }
+  /* CHANGE: real before/after photos of the same yard, same angle */
+  .ba-after,.ba-before{position:absolute;inset:0;background:center/cover no-repeat}
+  .ba-after{background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=70')}
+  .ba-before{background-image:url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1400&q=70');filter:grayscale(.55) brightness(.85)}
+  .ba-divider{
+    position:absolute;top:0;bottom:0;width:3px;background:var(--ochre);
+    transform:translateX(-1.5px);pointer-events:none;
+  }
+  .ba-divider::after{
+    content:"◂ ▸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    background:var(--ochre);color:var(--moss-2);font-size:.7rem;font-weight:700;
+    padding:7px 9px;border-radius:99px;white-space:nowrap;
+  }
+  .ba-label{
+    position:absolute;top:14px;font-size:.72rem;font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;background:rgba(21,25,20,.72);color:#fff;
+    padding:5px 12px;border-radius:3px;pointer-events:none;
+  }
+  .ba-label.l-before{left:14px}
+  .ba-label.l-after{right:14px}
+  .ba input[type=range]{
+    width:100%;margin-top:14px;accent-color:var(--ochre);cursor:ew-resize;
+  }
+  .ba-cap{text-align:center;font-size:.88rem;color:var(--ink-soft);margin-top:8px}
+
+  /* process timeline — numbered because it IS a sequence */
+  .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:step}
+  @media(max-width:760px){.proc{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.proc{grid-template-columns:1fr}}
+  .proc-step{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:22px;position:relative}
+  .proc-step::before{
+    counter-increment:step;content:counter(step);
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:50%;background:var(--moss);color:var(--ochre);
+    font-family:'Archivo';font-weight:800;margin-bottom:12px;
+  }
+  .proc-step h3{font-size:1rem;text-transform:uppercase;margin-bottom:6px}
+  .proc-step p{font-size:.88rem;color:var(--ink-soft)}
+  .proc-step .dur{margin-top:10px;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ochre-dark);font-weight:700}
+
+  /* FAQ */
+  .faq{max-width:720px;margin:0 auto}
+  .faq details{border-bottom:1px solid var(--rule)}
+  .faq summary{
+    cursor:pointer;list-style:none;padding:18px 4px;font-weight:600;font-size:1rem;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-family:'Archivo';font-weight:800;color:var(--ochre-dark);font-size:1.2rem;flex-shrink:0}
+  .faq details[open] summary::after{content:"–"}
+  .faq .a{padding:0 4px 18px;color:var(--ink-soft);font-size:.94rem;max-width:56em}
+
+  footer{background:var(--moss-2);color:#9aa795;padding:26px 0;text-align:center;font-size:.85rem}
+  footer .credit a{color:#7b8878}
+
+  :focus-visible{outline:2px solid var(--ochre);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">One of five demo sites by <a href="index.html">Sites by Ant — see the rest</a></div>
+
+<div class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="#top">Ironwood <b>Landscape</b></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#projects">Recent work</a>
+      <a href="#quote">Service area</a>
+      <a class="nav-cta" href="#quote">Free quote</a>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+
+<section class="hero" style="padding-bottom:0">
+  <div class="wrap hero-inner">
+    <div>
+      <!-- CHANGE: real license number -->
+      <span class="lic">CA Lic. #1098765 · Bonded &amp; Insured</span>
+      <h1>Your yard, <em>done right</em> the first time</h1>
+      <p>Design, hardscape, and maintenance for South Bay homes — by a crew that shows up when they said they would and leaves the site cleaner than they found it.</p>
+      <div class="btn-row">
+        <a class="btn" href="#quote">Request a free on-site quote</a>
+        <a class="btn line" href="#projects">See recent work</a>
+      </div>
+    </div>
+    <div class="hero-photo" role="img" aria-label="Finished backyard — new lawn, paver patio, planted borders"></div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap strip-row">
+    <!-- CHANGE: real numbers -->
+    <div class="stat"><b>14</b><span>Years in business</span></div>
+    <div class="stat"><b>300+</b><span>Projects completed</span></div>
+    <div class="stat"><b>4.9★</b><span>Google rating</span></div>
+    <div class="stat"><b>5</b><span>Cities served</span></div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="kick">What we do</div>
+    <h2 class="sec-title">Three crews, three trades</h2>
+    <p class="sec-sub">One company from first sketch to weekly upkeep — no handing your yard between three different contractors.</p>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <h3>Design &amp; planting</h3>
+        <p>Drought-smart landscapes designed around how you actually use the yard.</p>
+        <ul>
+          <li>Landscape design &amp; plans</li>
+          <li>Native &amp; low-water planting</li>
+          <li>Irrigation &amp; drip systems</li>
+          <li>Sod &amp; artificial turf</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <h3>Hardscape</h3>
+        <p>The bones of the yard — built to still look right twenty years from now.</p>
+        <ul>
+          <li>Paver patios &amp; walkways</li>
+          <li>Retaining walls</li>
+          <li>Fences &amp; gates</li>
+          <li>Outdoor kitchens &amp; fire pits</li>
+        </ul>
+      </div>
+      <div class="svc-card">
+        <h3>Maintenance</h3>
+        <p>Weekly or biweekly routes that keep the finished work looking finished.</p>
+        <ul>
+          <li>Mow, edge &amp; blow</li>
+          <li>Pruning &amp; seasonal cleanup</li>
+          <li>Irrigation checks &amp; repairs</li>
+          <li>Fertilization programs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="projects">
+  <div class="wrap">
+    <div class="kick">The proof</div>
+    <h2 class="sec-title">Recent work</h2>
+    <p class="sec-sub">Real yards, real budgets. Every project below was photographed the day we handed it back.</p>
+    <div class="proj-grid">
+      <!-- CHANGE: real projects — photo, city, scope -->
+      <div class="proj p1">
+        <div class="ph" role="img" aria-label="Backyard with new planting beds and stone path"></div>
+        <div class="pb">
+          <div class="loc">Willow Glen</div>
+          <h3>Full backyard rebuild</h3>
+          <p>Paver patio, drip-irrigated native beds, and a cedar privacy fence. Six weeks, start to finish.</p>
+        </div>
+      </div>
+      <div class="proj p2">
+        <div class="ph" role="img" aria-label="Front yard with drought-tolerant planting"></div>
+        <div class="pb">
+          <div class="loc">Los Gatos</div>
+          <h3>Lawn-to-native conversion</h3>
+          <p>Took out 1,800 sq ft of thirsty lawn, put in a low-water landscape that cut the summer bill in half.</p>
+        </div>
+      </div>
+      <div class="proj p3">
+        <div class="ph" role="img" aria-label="Paver driveway and entry walkway"></div>
+        <div class="pb">
+          <div class="loc">Campbell</div>
+          <h3>Driveway &amp; entry walk</h3>
+          <p>Permeable pavers over a proper base — no puddles, no shifting, and it survived the first winter untouched.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kick">Drag it yourself</div>
+    <h2 class="sec-title">Before &amp; after</h2>
+    <p class="sec-sub">Same yard, same camera angle, five weeks apart. Slide to compare.</p>
+    <div class="ba">
+      <div class="ba-frame" id="baFrame">
+        <div class="ba-after" role="img" aria-label="After: finished yard with new lawn and patio"></div>
+        <div class="ba-before" id="baBefore" role="img" aria-label="Before: bare dirt and old concrete"></div>
+        <div class="ba-divider" id="baDivider"></div>
+        <span class="ba-label l-before">Before</span>
+        <span class="ba-label l-after">After</span>
+      </div>
+      <input type="range" id="baRange" min="0" max="100" value="50" aria-label="Compare before and after photos">
+      <p class="ba-cap">Willow Glen backyard — graded, drained, planted, and handed back in five weeks.</p>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="wrap">
+    <div class="kick">How it goes</div>
+    <h2 class="sec-title">From first call to final walkthrough</h2>
+    <p class="sec-sub">The same four steps on every job, so you always know what happens next.</p>
+    <div class="proc">
+      <div class="proc-step">
+        <h3>Walk the yard</h3>
+        <p>We come out, measure, listen, and talk budget honestly — including what we'd skip.</p>
+        <div class="dur">Free · about an hour</div>
+      </div>
+      <div class="proc-step">
+        <h3>Fixed quote</h3>
+        <p>A written scope with a real number on it. No allowances that balloon later.</p>
+        <div class="dur">Within 3 days</div>
+      </div>
+      <div class="proc-step">
+        <h3>The build</h3>
+        <p>One crew, one foreman, a text update every day we're on site.</p>
+        <div class="dur">Scheduled in writing</div>
+      </div>
+      <div class="proc-step">
+        <h3>Walkthrough</h3>
+        <p>We walk every corner together. Final invoice only after you've signed off.</p>
+        <div class="dur">Plus 1-year warranty</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap quote-wrap">
+    <div class="kick">Word of mouth</div>
+    <!-- CHANGE: the single best real Google review, verbatim -->
+    <blockquote>&ldquo;Three quotes, and Ironwood was the only one that measured the yard instead of eyeballing it from the driveway. Finished on schedule, swept the street before they left. The patio is the best thing about our house now.&rdquo;</blockquote>
+    <div class="quote-by">Priya S — Google review</div>
+    <div class="quote-row">
+      <span class="quote-chip"><b>4.9★</b> on Google · 120+ reviews</span>
+      <span class="quote-chip"><b>Free</b> on-site quotes, always</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kick">Straight answers</div>
+    <h2 class="sec-title">Questions we always get</h2>
+    <div class="faq" style="margin-top:36px">
+      <details>
+        <summary>Do you charge for quotes?</summary>
+        <div class="a">No. We walk the yard, talk it through, and put a number in writing — free, no strings. We win enough of them that it works out.</div>
+      </details>
+      <details>
+        <summary>Are you licensed and insured?</summary>
+        <div class="a">Yes — CA contractor's license #1098765, bonded, with liability and workers' comp on every crew member. Certificates available before we start, not after you ask twice.</div>
+      </details>
+      <details>
+        <summary>How far out are you booked?</summary>
+        <div class="a">Design-build projects typically start four to six weeks from a signed quote. Maintenance routes usually have openings within two weeks. Spring fills fast — quote early.</div>
+      </details>
+      <details>
+        <summary>What happens if something fails after the job?</summary>
+        <div class="a">Everything we build carries a one-year workmanship warranty, and plants we install are covered for 90 days with normal watering. If it's our fault, we fix it — no invoice.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="quote" class="quote-sec">
+  <div class="wrap">
+    <div class="kick">Get a number</div>
+    <h2 class="sec-title">Free on-site quote</h2>
+    <p class="sec-sub">Tell us roughly what you're thinking. We'll come walk the yard, talk it through, and put a real number in writing — usually within three days.</p>
+    <div class="q-grid">
+      <div class="area">
+        <h3>Where we work</h3>
+        <!-- CHANGE: real service area -->
+        <ul>
+          <li>San Jose</li>
+          <li>Campbell</li>
+          <li>Los Gatos</li>
+          <li>Saratoga</li>
+          <li>Cupertino</li>
+          <li>Santa Clara</li>
+        </ul>
+        <p>Outside the list? Ask anyway — big projects travel.</p>
+      </div>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <label for="q-name">Your name</label>
+        <input id="q-name" name="name" type="text" required autocomplete="name">
+        <label for="q-contact">Email or phone</label>
+        <input id="q-contact" name="contact" type="text" required>
+        <label for="q-addr">Project address or city</label>
+        <input id="q-addr" name="address" type="text" placeholder="Campbell, near the community center">
+        <label for="q-msg">What are you thinking?</label>
+        <textarea id="q-msg" name="message" rows="3" placeholder="Back patio is cracked concrete, want pavers and some shade planting…"></textarea>
+        <button class="btn" type="submit">Request my quote</button>
+        <p class="or-call">Rather talk? <a href="tel:+14085550152">(408) 555-0152</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>© 2026 Ironwood Landscape Co. · CA Lic. #1098765 · San Jose, CA</div>
+  <div class="credit"><a href="https://sitesbyant.com" rel="noopener">Site by Ant</a></div>
+</footer>
+
+<script>
+  // Before/after compare: range input clips the "before" layer
+  const baRange = document.getElementById('baRange');
+  const baBefore = document.getElementById('baBefore');
+  const baDivider = document.getElementById('baDivider');
+  function setBA(v){
+    baBefore.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
+    baDivider.style.left = v + '%';
+  }
+  baRange.addEventListener('input', () => setBA(baRange.value));
+  setBA(50);
+</script>
+
+</body>
+</html>
