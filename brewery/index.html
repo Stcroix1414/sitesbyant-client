@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     SITES BY ANT — CLIENT DEMO (brewery / taproom variant)
+     Demo business: "Slow Current Brewing Co." (fictional)
+     Visual system: printed beer label. Cream stock, navy ink,
+     amber foil. Deliberately photo-free — the typography IS the
+     branding, set in a serif display + monospace spec sheet.
+     Interactive: age gate, data-driven tap sheet with filters,
+     tap-to-build flight paddle, live open-now state.
+     Search CHANGE: for every per-client swap point.
+     ============================================================ -->
+<title>Slow Current Brewing Co. — Small-Batch Brewery &amp; Taproom | San Jose</title>
+<meta name="description" content="Small-batch brewery and taproom on the Los Gatos Creek trail in San Jose. Twelve rotating taps, food truck residencies, patio until ten. See what's pouring.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Brewery",
+  "name": "Slow Current Brewing Co.",
+  "telephone": "+1-408-555-0188",
+  "address": {"@type": "PostalAddress", "addressLocality": "San Jose", "addressRegion": "CA"},
+  "url": "https://example.com",
+  "sameAs": ["https://instagram.com/slowcurrentbrewing"]
+}
+</script>
+<style>
+  :root{
+    --stock:#f6f1e3;
+    --stock-2:#efe7d2;
+    --navy:#1d2a44;
+    --navy-soft:#54617c;
+    --hairline:#d8cfba;
+    --amber:#c9822a;
+    --amber-deep:#a86a1d;
+    --hop:#4a7c47;
+    --kicked:#a8503f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:var(--stock);color:var(--navy);
+    font-size:17px;line-height:1.6;
+  }
+  ::selection{background:var(--amber);color:var(--stock)}
+  h1,h2,h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;line-height:1.02}
+  a{color:var(--amber-deep)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* showroom ribbon */
+  .demo-ribbon{
+    background:var(--navy);color:#aeb6c8;text-align:center;
+    font-size:.8rem;letter-spacing:.06em;padding:8px 16px;
+  }
+  .demo-ribbon a{color:#fff;font-weight:600;text-decoration:underline}
+
+  /* age gate */
+  .gate{
+    position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+    background:rgba(29,42,68,.55);backdrop-filter:blur(3px);padding:24px;
+  }
+  .gate[hidden]{display:none}
+  .gate-card{
+    max-width:400px;text-align:center;background:var(--stock);
+    border:2px solid var(--navy);padding:44px 36px;position:relative;
+  }
+  .gate-card::after{content:"";position:absolute;inset:6px;border:1px solid var(--hairline);pointer-events:none}
+  .gate-card .big{font-family:'Instrument Serif';font-size:4.6rem;line-height:1;color:var(--amber-deep)}
+  .gate-card .big i{font-style:italic}
+  .gate-card h2{font-size:1.4rem;margin:8px 0 6px}
+  .gate-card p{font-family:'Space Mono',monospace;color:var(--navy-soft);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:26px}
+  .gate-row{display:flex;gap:12px;justify-content:center;position:relative;z-index:1}
+  .gate-yes,.gate-no{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:.85rem;letter-spacing:.04em;
+    padding:13px 22px;cursor:pointer;text-decoration:none;text-transform:uppercase;
+  }
+  .gate-yes{background:var(--navy);color:var(--stock);border:2px solid var(--navy)}
+  .gate-yes:hover{background:var(--amber-deep);border-color:var(--amber-deep)}
+  .gate-no{background:transparent;color:var(--navy-soft);border:2px solid var(--hairline)}
+  .gate-no:hover{color:var(--navy);border-color:var(--navy)}
+  body.gated{overflow:hidden}
+
+  /* utility bar */
+  .util{border-bottom:2px solid var(--navy)}
+  .util-row{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:10px 0;font-family:'Space Mono',monospace;font-size:.74rem;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--navy-soft);
+  }
+  @media(max-width:640px){.util-row .hide-sm{display:none}}
+  .util-row a{text-decoration:none;color:var(--navy-soft)}
+  .util-row a:hover{color:var(--navy)}
+  .open-flag{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+  .open-flag .dot{width:9px;height:9px;border-radius:50%;background:var(--hairline)}
+  .open-flag.is-open{color:var(--hop)}
+  .open-flag.is-open .dot{background:var(--hop)}
+  .open-flag.is-closed{color:var(--navy-soft)}
+
+  /* label hero — pure type */
+  .hero{border-bottom:2px solid var(--navy);padding:64px 0 0;overflow:hidden}
+  .hero-spec{
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--navy-soft);margin-bottom:26px;
+  }
+  .hero-spec span b{color:var(--amber-deep);font-weight:700}
+  .hero h1{
+    font-size:clamp(3.4rem,12.5vw,9.2rem);letter-spacing:-.015em;
+    margin:0 0 6px -4px;
+  }
+  .hero h1 em{font-style:italic;color:var(--amber-deep)}
+  .hero .strap{
+    border-top:1px solid var(--hairline);padding:18px 0 22px;
+  }
+  .hero .strap p{font-size:1.05rem;color:var(--navy-soft);max-width:36em}
+  .hero .strap p b{color:var(--navy);font-weight:600}
+  .hero-nav{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:30px}
+  .hero-nav a{
+    font-family:'Space Mono',monospace;font-size:.78rem;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;text-decoration:none;color:var(--navy);
+    border:1.5px solid var(--navy);padding:10px 18px;
+  }
+  .hero-nav a:hover{background:var(--navy);color:var(--stock)}
+  .hero-nav a.fill{background:var(--amber-deep);border-color:var(--amber-deep);color:var(--stock)}
+  .hero-nav a.fill:hover{background:var(--navy);border-color:var(--navy)}
+
+  /* running band */
+  .band{
+    border-bottom:2px solid var(--navy);background:var(--navy);color:var(--stock);
+    font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.18em;
+    text-transform:uppercase;padding:9px 0;overflow:hidden;white-space:nowrap;
+  }
+  .band span{display:inline-block;padding-left:100%;animation:run 32s linear infinite}
+  .band b{color:var(--amber);font-weight:700}
+  @keyframes run{to{transform:translateX(-100%)}}
+  @media (prefers-reduced-motion:reduce){
+    .band span{animation:none;padding-left:0}
+    .band{text-align:center;white-space:normal}
+  }
+
+  section{padding:70px 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;border-bottom:2px solid var(--navy);padding-bottom:14px}
+  .sec-head .no{font-family:'Space Mono',monospace;font-weight:700;font-size:.85rem;color:var(--amber-deep)}
+  .sec-head h2{font-size:clamp(1.9rem,4.6vw,3rem)}
+  .sec-head .aside{margin-left:auto;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-soft)}
+  @media(max-width:640px){.sec-head .aside{display:none}}
+  .sec-sub{color:var(--navy-soft);max-width:44em;margin:16px 0 36px}
+  .sec-sub b{color:var(--navy);font-weight:600}
+
+  /* tap sheet */
+  .tap-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .tap-btn{
+    font-family:'Space Mono',monospace;font-size:.74rem;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--navy-soft);background:transparent;
+    border:1.5px solid var(--hairline);padding:8px 16px;cursor:pointer;
+  }
+  .tap-btn:hover{color:var(--navy);border-color:var(--navy)}
+  .tap-btn[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--stock)}
+  .sheet{border-top:2px solid var(--navy)}
+  .tap{
+    display:grid;grid-template-columns:56px 1.4fr 1fr 150px 110px;gap:16px;align-items:center;
+    padding:15px 4px;border-bottom:1px solid var(--hairline);
+  }
+  @media(max-width:760px){
+    .tap{grid-template-columns:44px 1fr 96px;row-gap:2px}
+    .tap .style-col{grid-column:2;font-size:.8rem}
+    .tap .abv-col{display:none}
+  }
+  .tap[data-pour]{cursor:pointer}
+  .tap[data-pour]:hover{background:var(--stock-2)}
+  .tap.selected{background:var(--stock-2);box-shadow:inset 3px 0 0 var(--amber-deep)}
+  .tap.kicked{opacity:.45}
+  .tap .no{font-family:'Space Mono',monospace;font-weight:700;color:var(--navy-soft);font-size:.85rem}
+  .tap.selected .no{color:var(--amber-deep)}
+  .tap h3{font-size:1.35rem}
+  .tap .style-col{color:var(--navy-soft);font-size:.9rem}
+  .abv-col{display:flex;align-items:center;gap:10px}
+  .abv-col .val{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;min-width:44px}
+  .abv-col .bar{flex:1;height:3px;background:var(--hairline)}
+  .abv-col .bar i{display:block;height:100%;background:var(--amber-deep)}
+  .tap .status{font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:right}
+  .tap .status.pouring{color:var(--hop)}
+  .tap .status.kicked{color:var(--kicked)}
+  .tap .status.soon{color:var(--navy-soft)}
+  .tap-note{margin-top:22px;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--navy-soft)}
+
+  /* flight paddle bar */
+  .flight-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:30;
+    background:var(--stock);border-top:2px solid var(--navy);
+    transform:translateY(110%);transition:transform .22s ease;
+  }
+  @media (prefers-reduced-motion:reduce){.flight-bar{transition:none}}
+  .flight-bar.show{transform:translateY(0)}
+  .flight-inner{
+    max-width:1080px;margin:0 auto;padding:13px 24px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .flight-label{font-family:'Instrument Serif';font-style:italic;font-size:1.25rem;color:var(--amber-deep);white-space:nowrap}
+  .flight-slots{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+  .slot{
+    font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;border:1.5px dashed var(--hairline);padding:7px 13px;color:var(--navy-soft);
+  }
+  .slot.filled{border-style:solid;border-color:var(--navy);color:var(--navy);background:var(--stock-2)}
+  .flight-stats{font-family:'Space Mono',monospace;font-size:.74rem;color:var(--navy-soft);white-space:nowrap;font-weight:700}
+  .flight-stats b{color:var(--amber-deep)}
+  .flight-clear{
+    font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--navy-soft);background:none;
+    border:1.5px solid var(--hairline);padding:8px 14px;cursor:pointer;
+  }
+  .flight-clear:hover{color:var(--navy);border-color:var(--navy)}
+  body.has-flight main{padding-bottom:78px}
+
+  /* story — two column print */
+  .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  @media(max-width:760px){.story-grid{grid-template-columns:1fr;gap:28px}}
+  .story-lede{font-family:'Instrument Serif';font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.25}
+  .story-lede em{font-style:italic;color:var(--amber-deep)}
+  .story-copy p{color:var(--navy-soft);margin-bottom:15px}
+  .story-copy p b{color:var(--navy);font-weight:600}
+  .batch-card{
+    margin-top:26px;border:1.5px solid var(--navy);padding:20px 22px;
+    font-family:'Space Mono',monospace;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;
+  }
+  .batch-card .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--hairline)}
+  .batch-card .row:last-child{border-bottom:none}
+  .batch-card .row b{color:var(--amber-deep)}
+
+  /* events */
+  .event{
+    display:grid;grid-template-columns:130px 1fr auto;gap:20px;align-items:baseline;
+    padding:18px 4px;border-bottom:1px solid var(--hairline);
+  }
+  .event:first-of-type{border-top:2px solid var(--navy)}
+  @media(max-width:600px){.event{grid-template-columns:96px 1fr}.event .tag{display:none}}
+  .event .date{font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--amber-deep)}
+  .event h3{font-size:1.45rem}
+  .event p{font-size:.92rem;color:var(--navy-soft);margin-top:2px}
+  .event .tag{font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--hop);white-space:nowrap}
+  .truck-note{
+    margin-top:30px;border:1.5px solid var(--navy);padding:18px 22px;
+    font-size:.95rem;color:var(--navy-soft);
+  }
+  .truck-note b{color:var(--amber-deep);font-weight:600}
+
+  /* visit */
+  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;max-width:900px}
+  @media(max-width:700px){.visit-grid{grid-template-columns:1fr}}
+  .hours h3,.find h3{font-size:1.7rem;margin-bottom:14px}
+  .hours table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .hours td{padding:9px 4px;border-bottom:1px solid var(--hairline);font-size:.95rem}
+  .hours td:last-child{text-align:right;font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700}
+  .hours tr.today td{color:var(--amber-deep)}
+  .hours .closed td:last-child{color:var(--navy-soft);font-weight:400}
+  .find p{color:var(--navy-soft);margin-bottom:14px;font-size:.95rem}
+  .find .addr{font-family:'Space Mono',monospace;font-size:.85rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--navy)}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .btn{
+    display:inline-block;font-family:'Space Mono',monospace;font-size:.78rem;font-weight:700;
+    letter-spacing:.05em;text-transform:uppercase;text-decoration:none;
+    background:var(--navy);color:var(--stock);padding:13px 22px;border:1.5px solid var(--navy);
+  }
+  .btn:hover{background:var(--amber-deep);border-color:var(--amber-deep)}
+  .btn.line{background:transparent;color:var(--navy)}
+  .btn.line:hover{background:var(--navy);color:var(--stock)}
+
+  footer{border-top:2px solid var(--navy);padding:26px 0;text-align:center}
+  footer .row{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-soft)}
+  footer .row a{color:var(--navy);text-decoration:none;margin:0 8px}
+  footer .row a:hover{color:var(--amber-deep)}
+  footer .fine{margin-top:8px;font-family:'Instrument Serif';font-style:italic;font-size:.95rem;color:var(--navy-soft)}
+  footer .credit{margin-top:8px;font-size:.78rem}
+  footer .credit a{color:var(--navy-soft)}
+
+  :focus-visible{outline:2px solid var(--amber-deep);outline-offset:2px}
+</style>
+</head>
+<body class="gated">
+
+<!-- age gate -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="big">21<i>+</i></div>
+    <h2>Old enough for a pint?</h2>
+    <p>We'll only ask once</p>
+    <div class="gate-row">
+      <button class="gate-yes" id="gateYes">Yes — pour on</button>
+      <a class="gate-no" href="/">Not yet</a>
+    </div>
+  </div>
+</div>
+
+<div class="demo-ribbon">One of six demo sites by <a href="/">Sites by Ant — see the rest</a></div>
+
+<div class="util">
+  <div class="wrap util-row">
+    <span class="hide-sm">San Jose, California — on the creek trail</span>
+    <span class="open-flag" id="openPill"><span class="dot"></span><span id="openText">Checking hours…</span></span>
+    <a href="tel:+14085550188">(408) 555-0188</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-spec">
+      <span>Est. <b>2022</b></span>
+      <span>System <b>10 BBL</b></span>
+      <span>Taps <b>12</b></span>
+      <span>Patio <b>'til 10</b></span>
+      <span>Dogs <b>Yes</b></span>
+    </div>
+    <h1>Slow <em>Current</em><br>Brewing Co.</h1>
+    <div class="strap">
+      <p><b>Brewed slow, poured slower.</b> Twelve taps that change weekly, a patio that catches the evening light, and a different food truck out front every week. No TVs, good chairs.</p>
+    </div>
+    <nav class="hero-nav">
+      <a class="fill" href="#taps">What's pouring</a>
+      <a href="#story">The brewery</a>
+      <a href="#events">Events</a>
+      <a href="#visit">Visit</a>
+    </nav>
+  </div>
+</header>
+
+<div class="band" aria-hidden="true">
+  <span>Fresh-hop day Aug 15 · one keg, one day &nbsp;///&nbsp; <b>Smoke &amp; Bone BBQ</b> out front Fri + Sat &nbsp;///&nbsp; Crowlers to go on everything pouring &nbsp;///&nbsp; Trivia Thursdays 6:30 &nbsp;///&nbsp; Fresh-hop day Aug 15 · one keg, one day &nbsp;///&nbsp; <b>Smoke &amp; Bone BBQ</b> out front Fri + Sat &nbsp;///&nbsp; Crowlers to go on everything pouring &nbsp;///&nbsp; Trivia Thursdays 6:30</span>
+</div>
+
+<main>
+
+<section id="taps">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">01</span>
+      <h2>The tap sheet</h2>
+      <span class="aside">Updated when a keg kicks</span>
+    </div>
+    <p class="sec-sub">The sheet below is the real one — when a keg kicks at the bar, it kicks here. <b>Select any pouring beer to build a flight</b>: pick four, show the paddle at the bar.</p>
+    <div class="tap-filters" id="tapFilters" role="group" aria-label="Filter taps by style"></div>
+    <div class="sheet" id="tapBoard"></div>
+    <p class="tap-note">4oz tasters of anything, always · crowlers to go · nitro on tap 08</p>
+  </div>
+</section>
+
+<section id="story">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">02</span>
+      <h2>Named for the creek out back</h2>
+    </div>
+    <div class="story-grid" style="margin-top:34px">
+      <p class="story-lede">Four years ago this was a two-barrel rig in the corner of a cabinet shop. It's still <em>one batch at a time</em> — there's just more barrel now.</p>
+      <div class="story-copy">
+        <p>Half the board stays classic — a pilsner and a pale that never leave. The other half is wherever the brewers wandered that month: a rye lager, a foraged-sage saison, whatever the barrels give back.</p>
+        <p>The taproom is the whole front of the building. <b>If the garage door is up, the patio is open</b>, and someone's dog is already there.</p>
+        <div class="batch-card" aria-label="Current batch specs">
+          <!-- CHANGE: rotate with the current featured batch -->
+          <div class="row"><span>Now conditioning</span><b>Batch № 214</b></div>
+          <div class="row"><span>Style</span><b>Baltic porter</b></div>
+          <div class="row"><span>In tanks</span><b>21 days</b></div>
+          <div class="row"><span>On the board</span><b>≈ Sept 4</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="events">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">03</span>
+      <h2>Taproom nights</h2>
+      <span class="aside">No cover, ever</span>
+    </div>
+    <div style="margin-top:34px">
+      <!-- CHANGE: real events -->
+      <div class="event">
+        <span class="date">Thu · Weekly</span>
+        <div><h3>Trivia on the patio</h3><p>Seven rounds, winning team drinks free. The good tables go by six.</p></div>
+        <span class="tag">6:30 pm</span>
+      </div>
+      <div class="event">
+        <span class="date">Aug 15</span>
+        <div><h3>Fresh-hop day</h3><p>Wet hops cut at a Gilroy farm at dawn, in the kettle by nine. One keg, one day, gone by dark.</p></div>
+        <span class="tag">One day only</span>
+      </div>
+      <div class="event">
+        <span class="date">Sat · Weekly</span>
+        <div><h3>Run club, reluctantly</h3><p>An easy 5k on the creek trail, then the first pour's a dollar off. Walkers welcome and numerous.</p></div>
+        <span class="tag">9:00 am</span>
+      </div>
+    </div>
+    <!-- crossover: food-truck residency links demos like real local businesses do -->
+    <div class="truck-note"><b>Food truck in residence —</b> Smoke &amp; Bone BBQ is parked out front Fridays and Saturdays this month. Brisket and a pilsner is the correct order. <a href="/bbq/">See their menu →</a></div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">04</span>
+      <h2>The taproom</h2>
+      <span class="aside" id="visitAside">—</span>
+    </div>
+    <div class="visit-grid" style="margin-top:34px">
+      <div class="hours">
+        <h3>Hours</h3>
+        <!-- CHANGE: real hours — keep data-day/data-open/data-close in sync for the open-now flag -->
+        <table id="hoursTable">
+          <tr data-day="3" data-open="15" data-close="21"><td>Wednesday</td><td>3—9</td></tr>
+          <tr data-day="4" data-open="15" data-close="21"><td>Thursday</td><td>3—9</td></tr>
+          <tr data-day="5" data-open="14" data-close="22"><td>Friday</td><td>2—10</td></tr>
+          <tr data-day="6" data-open="12" data-close="22"><td>Saturday</td><td>12—10</td></tr>
+          <tr data-day="0" data-open="12" data-close="19"><td>Sunday</td><td>12—7</td></tr>
+          <tr class="closed"><td>Monday — Tuesday</td><td>Brew days</td></tr>
+        </table>
+      </div>
+      <div class="find">
+        <h3>Find us</h3>
+        <!-- CHANGE: real address & phone -->
+        <p class="addr">41 Current Way · San Jose CA 95126</p>
+        <p>Right on the Los Gatos Creek trail — ride in, the racks are under the awning. Kids and dogs fine on the patio until 8.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://maps.google.com" rel="noopener">Directions</a>
+          <a class="btn line" href="tel:+14085550188">Call</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- flight paddle -->
+<div class="flight-bar" id="flightBar" aria-live="polite">
+  <div class="flight-inner">
+    <span class="flight-label">Your flight</span>
+    <div class="flight-slots" id="flightSlots"></div>
+    <span class="flight-stats" id="flightStats"></span>
+    <button class="flight-clear" id="flightClear">Clear</button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <a href="https://instagram.com/" rel="noopener">Instagram</a> ·
+      <a href="tel:+14085550188">Call</a> ·
+      <span>© 2026 Slow Current Brewing Co.</span>
+    </div>
+    <div class="fine">Please drink like you have somewhere to be tomorrow.</div>
+    <div class="credit"><a href="https://sitesbyant.com" rel="noopener">Site by Ant</a></div>
+  </div>
+</footer>
+
+<script>
+  // ---- age gate (remembered per browser) ----
+  const gate = document.getElementById('gate');
+  if (localStorage.getItem('sc-of-age') === 'yes') {
+    gate.hidden = true;
+    document.body.classList.remove('gated');
+  }
+  document.getElementById('gateYes').addEventListener('click', () => {
+    localStorage.setItem('sc-of-age', 'yes');
+    gate.hidden = true;
+    document.body.classList.remove('gated');
+  });
+
+  // ---- tap sheet: data in, board out ----
+  // CHANGE: this array IS the tap list — edit it and the sheet redraws
+  const TAPS = [
+    { no: 1,  name: 'Creekside Pils',     style: 'Czech-style pilsner',   cat: 'crisp', abv: 4.8, status: 'pouring' },
+    { no: 2,  name: 'Porch Light',        style: 'Blonde ale',            cat: 'crisp', abv: 5.0, status: 'pouring' },
+    { no: 3,  name: 'Undertow',           style: 'West Coast IPA',        cat: 'hoppy', abv: 6.9, status: 'pouring' },
+    { no: 4,  name: 'Fog on the Trail',   style: 'Hazy IPA',              cat: 'hoppy', abv: 6.5, status: 'pouring' },
+    { no: 5,  name: 'Second Ferment',     style: 'Rye lager',             cat: 'crisp', abv: 5.2, status: 'pouring' },
+    { no: 6,  name: 'Sage Advice',        style: 'Foraged-sage saison',   cat: 'wild',  abv: 6.1, status: 'pouring' },
+    { no: 7,  name: 'Barrel No. 9',       style: 'Oak-aged sour',         cat: 'wild',  abv: 5.4, status: 'pouring' },
+    { no: 8,  name: 'Silt',               style: 'Oatmeal stout · nitro', cat: 'dark',  abv: 5.6, status: 'pouring' },
+    { no: 9,  name: 'Night Water',        style: 'Baltic porter',         cat: 'dark',  abv: 7.8, status: 'pouring' },
+    { no: 10, name: 'Low Tide',           style: 'Table beer',            cat: 'crisp', abv: 3.2, status: 'pouring' },
+    { no: 11, name: 'Fresh-Hop Undertow', style: 'Wet-hop IPA',           cat: 'hoppy', abv: 6.8, status: 'soon'    },
+    { no: 12, name: 'Last Summer',        style: 'Peach wild ale',        cat: 'wild',  abv: 5.9, status: 'kicked'  }
+  ];
+  const CATS = [
+    ['all',   'All twelve'],
+    ['crisp', 'Crisp'],
+    ['hoppy', 'Hoppy'],
+    ['dark',  'Dark'],
+    ['wild',  'Wild + sour']
+  ];
+  const STATUS_LABEL = { pouring: 'Pouring', kicked: 'Kicked', soon: 'On deck' };
+  const board = document.getElementById('tapBoard');
+  const filters = document.getElementById('tapFilters');
+
+  const FLIGHT_MAX = 4;
+  const flight = new Set();
+  const flightBar = document.getElementById('flightBar');
+  const flightSlots = document.getElementById('flightSlots');
+  const flightStats = document.getElementById('flightStats');
+  let currentCat = 'all';
+
+  function renderBoard(cat){
+    currentCat = cat;
+    board.innerHTML = TAPS
+      .filter(t => cat === 'all' || t.cat === cat)
+      .map(t => {
+        const pourable = t.status === 'pouring';
+        const sel = flight.has(t.no);
+        return `
+        <div class="tap${t.status === 'kicked' ? ' kicked' : ''}${sel ? ' selected' : ''}"
+             ${pourable ? `data-pour data-no="${t.no}" role="button" tabindex="0" aria-pressed="${sel}"
+             aria-label="${sel ? 'Remove' : 'Add'} ${t.name} ${sel ? 'from' : 'to'} your flight"` : ''}>
+          <span class="no">${String(t.no).padStart(2,'0')}</span>
+          <h3>${t.name}</h3>
+          <span class="style-col">${t.style}</span>
+          <span class="abv-col"><span class="val">${t.abv.toFixed(1)}%</span><span class="bar"><i style="width:${Math.min(t.abv/10*100,100)}%"></i></span></span>
+          <span class="status ${t.status}">${STATUS_LABEL[t.status]}</span>
+        </div>`;
+      }).join('');
+  }
+
+  function renderFlight(){
+    const picks = TAPS.filter(t => flight.has(t.no));
+    flightSlots.innerHTML = Array.from({length: FLIGHT_MAX}, (_, i) =>
+      picks[i]
+        ? `<span class="slot filled">${picks[i].name}</span>`
+        : `<span class="slot">Taster ${i + 1}</span>`
+    ).join('');
+    if (picks.length){
+      const avg = picks.reduce((s, t) => s + t.abv, 0) / picks.length;
+      flightStats.innerHTML = `<b>${picks.length}/${FLIGHT_MAX}</b> · avg <b>${avg.toFixed(1)}%</b>`;
+    } else {
+      flightStats.textContent = '';
+    }
+    flightBar.classList.toggle('show', picks.length > 0);
+    document.body.classList.toggle('has-flight', picks.length > 0);
+  }
+
+  function toggleTap(no){
+    if (flight.has(no)) flight.delete(no);
+    else if (flight.size < FLIGHT_MAX) flight.add(no);
+    else return; // paddle's full — remove one first
+    renderBoard(currentCat);
+    renderFlight();
+  }
+
+  board.addEventListener('click', e => {
+    const card = e.target.closest('.tap[data-pour]');
+    if (card) toggleTap(Number(card.dataset.no));
+  });
+  board.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('.tap[data-pour]');
+    if (card){ e.preventDefault(); toggleTap(Number(card.dataset.no)); }
+  });
+  document.getElementById('flightClear').addEventListener('click', () => {
+    flight.clear();
+    renderBoard(currentCat);
+    renderFlight();
+  });
+
+  filters.innerHTML = CATS.map(([id,label]) =>
+    `<button class="tap-btn" data-cat="${id}" aria-pressed="${id === 'all'}">${label}</button>`).join('');
+  filters.addEventListener('click', e => {
+    const btn = e.target.closest('.tap-btn');
+    if (!btn) return;
+    filters.querySelectorAll('.tap-btn').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    renderBoard(btn.dataset.cat);
+  });
+  renderBoard('all');
+  renderFlight();
+
+  // ---- open-now flag + today row, driven by the hours table data ----
+  (function(){
+    const now = new Date();
+    const day = now.getDay(), hour = now.getHours() + now.getMinutes()/60;
+    const pill = document.getElementById('openPill');
+    const text = document.getElementById('openText');
+    const aside = document.getElementById('visitAside');
+    let todayRow = null, openNow = false, opensAt = null;
+    document.querySelectorAll('#hoursTable tr[data-day]').forEach(tr => {
+      if (Number(tr.dataset.day) === day){
+        todayRow = tr;
+        const o = Number(tr.dataset.open), c = Number(tr.dataset.close);
+        if (hour >= o && hour < c) openNow = true;
+        else if (hour < o) opensAt = o;
+      }
+    });
+    if (todayRow) todayRow.classList.add('today');
+    const fmt = h => (h % 12 === 0 ? 12 : h % 12) + (h < 12 ? 'am' : 'pm');
+    if (openNow){
+      pill.classList.add('is-open');
+      text.textContent = 'Open now';
+      aside.textContent = 'Door’s open';
+    } else {
+      pill.classList.add('is-closed');
+      text.textContent = opensAt ? ('Opens ' + fmt(opensAt)) : 'Closed today';
+      aside.textContent = opensAt ? ('Opens ' + fmt(opensAt)) : 'Back Wednesday';
+    }
+  })();
+</script>
+
+</body>
+</html>
