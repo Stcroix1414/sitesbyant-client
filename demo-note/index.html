@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     SITES BY ANT — DEMO SHOWROOM
+     Landing spot for every demo button that would, on a real
+     client site, hit a live system: bookings, form submissions,
+     ordering. Forms point here with method="get".
+     ============================================================ -->
+<title>That click worked — Sites by Ant Demo Showroom</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#22303c;--ink-soft:#4a5a68;--paper:#fcfcfa;--panel:#f1efe9;
+    --line:#d8d4ca;--green:#1e6f50;--green-dark:#175a41;--brass:#b98a2f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Public Sans',-apple-system,sans-serif;color:var(--ink);background:var(--paper);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:32px 24px;line-height:1.6;
+  }
+  .card{max-width:560px}
+  .kicker{
+    display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--brass);margin-bottom:12px;
+  }
+  h1{font-family:'Bitter',serif;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.15;margin-bottom:14px}
+  h1 span{color:var(--green)}
+  p{color:var(--ink-soft);margin-bottom:14px}
+  p b{color:var(--ink);font-weight:600}
+  .how{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:20px 22px;margin:22px 0 26px;font-size:.94rem;
+  }
+  .how ul{list-style:none;margin-top:8px}
+  .how li{padding:6px 0;color:var(--ink-soft);border-top:1px solid var(--line)}
+  .how li:first-child{border-top:none;padding-top:0}
+  .how li b{color:var(--ink)}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;background:var(--green);color:#fff;text-decoration:none;
+    font-weight:600;padding:13px 22px;border-radius:5px;font-size:.97rem;border:none;cursor:pointer;font-family:inherit;
+  }
+  .btn:hover{background:var(--green-dark)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:#fff}
+  .fine{margin-top:20px;font-size:.85rem;color:var(--ink-soft)}
+  .fine a{color:var(--green);font-weight:600}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="kicker">Sites by Ant — demo showroom</span>
+  <h1>That click worked. <span>Here's what it would do for real.</span></h1>
+  <p>You just used a booking button or sent a form on one of our demo sites. The businesses in the showroom are fictional, so there's no bartender, barber, or crew chief on the other end — <b>but the wiring is exactly what a live site gets.</b></p>
+  <div class="how">
+    On a real client site, that click connects to:
+    <ul>
+      <li><b>Bookings</b> — the scheduling system you already use (Square, Booksy, Calendly, Vagaro…) or one we set up for you</li>
+      <li><b>Forms</b> — straight to the owner's email inbox, no dashboard to check</li>
+      <li><b>Calls &amp; directions</b> — the real phone number and pin, one tap</li>
+    </ul>
+  </div>
+  <div class="btn-row">
+    <button class="btn ghost" id="backBtn">← Back to the demo</button>
+    <a class="btn" href="https://sitesbyant.com/#contact">Get this for your business</a>
+  </div>
+  <p class="fine">Or browse the rest of the <a href="/">demo showroom</a>.</p>
+</div>
+<script>
+  const backBtn = document.getElementById('backBtn');
+  if (history.length > 1) backBtn.addEventListener('click', () => history.back());
+  else { backBtn.addEventListener('click', () => location.href = '/'); backBtn.textContent = '← To the showroom'; }
+</script>
+</body>
+</html>
