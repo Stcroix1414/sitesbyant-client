@@ -106,13 +106,10 @@
 
   /* label hero — pure type */
   .hero{background:var(--navy);color:var(--stock);padding:58px 0 0;overflow:hidden}
-  .hero-spec{
-    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
-    font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.14em;
-    text-transform:uppercase;color:#8f9cb5;margin-bottom:26px;
-    border-bottom:1px solid #35415c;padding-bottom:14px;
+  .hero-eyebrow{
+    font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--amber);margin-bottom:14px;
   }
-  .hero-spec span b{color:var(--amber);font-weight:700}
   .hero h1{
     font-size:clamp(2.5rem,8.5vw,6rem);letter-spacing:.005em;
     margin:0 0 10px -2px;text-shadow:4px 4px 0 rgba(0,0,0,.25);
@@ -314,16 +311,10 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="hero-spec">
-      <span>Est. <b>2022</b></span>
-      <span>System <b>10 BBL</b></span>
-      <span>Taps <b>12</b></span>
-      <span>Patio <b>'til 10</b></span>
-      <span>Dogs <b>Yes</b></span>
-    </div>
+    <div class="hero-eyebrow">Small-batch brewery · Est. 2022</div>
     <h1>Slow <em>Current</em><br>Brewing Co.</h1>
     <div class="strap">
-      <p><b>Brewed slow, poured slower.</b> Twelve taps that change weekly, a patio that catches the evening light, and a different food truck out front every week. No TVs, good chairs.</p>
+      <p><b>Brewed slow, poured slower.</b> Twelve taps that change weekly, a patio that catches the evening light 'til 10, and a different food truck out front every week. No TVs, good chairs, dogs welcome.</p>
     </div>
     <nav class="hero-nav">
       <a class="fill" href="#taps">What's pouring</a>
