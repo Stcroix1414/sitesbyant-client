@@ -111,22 +111,14 @@
   }
   .sec-sub{text-align:center;color:var(--smoke);max-width:36em;margin:0 auto 46px}
 
-  /* menu board */
-  .board{max-width:640px;margin:0 auto}
-  .board-cat{
-    text-align:center;font-family:'Big Shoulders Display';font-weight:600;
-    text-transform:uppercase;letter-spacing:.2em;font-size:1.05rem;color:var(--smoke);
-    margin:44px 0 18px;
+  /* menu teaser */
+  .menu-btn{
+    display:inline-block;background:var(--ember);color:#160b06;text-decoration:none;
+    font-family:'Big Shoulders Display';font-weight:800;text-transform:uppercase;
+    letter-spacing:.08em;font-size:1.25rem;padding:16px 38px;border-radius:6px;
   }
-  .board-cat:first-child{margin-top:0}
-  .board-cat::before,.board-cat::after{content:"— ";color:var(--rule)}
-  .board-cat::after{content:" —"}
-  .dish{display:flex;align-items:baseline;gap:8px;padding:9px 0}
-  .dish .n{font-weight:600;white-space:nowrap}
-  .dish .dots{flex:1;border-bottom:2px dotted var(--rule);transform:translateY(-4px)}
-  .dish .p{font-family:'Big Shoulders Display';font-weight:800;font-size:1.25rem;color:var(--ember)}
-  .dish-desc{font-size:.88rem;color:var(--smoke);margin-top:-6px;padding-bottom:6px;font-style:italic}
-  .board-note{text-align:center;color:var(--smoke);font-size:.9rem;margin-top:40px}
+  .menu-btn:hover{background:var(--ember-dim)}
+  .board-note{text-align:center;color:var(--smoke);font-size:.9rem;margin-top:26px}
 
   /* story — centered single column, big pull line */
   .story{background:var(--coal-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
@@ -216,8 +208,7 @@
   <h1>Smoke <span class="amp">&amp;</span> Bone</h1>
   <div class="sub">Central Texas Barbecue · From the Truck</div>
   <nav class="mast-nav">
-    <a href="#menu">Menu</a>
-    <a href="/bbq/menu/">Printable menu</a>
+    <a href="/bbq/menu/">Menu</a>
     <a href="#schedule">This week's schedule</a>
     <a href="#catering">Catering</a>
     <a class="hot" href="tel:+14085550134">Call to order</a>
@@ -229,35 +220,12 @@
 <main>
 
 <section id="menu">
-  <div class="wrap">
+  <div class="wrap" style="text-align:center">
     <div class="kick">The board</div>
     <h2 class="sec-title">Sliced when you order</h2>
-    <p class="sec-sub">Post oak, salt, pepper, and fourteen hours. When the pit runs empty, we're done for the day.</p>
-    <div class="board">
-      <div class="board-cat">By the half pound</div>
-      <div class="dish"><span class="n">Brisket</span><span class="dots"></span><span class="p">16</span></div>
-      <div class="dish-desc">moist or lean cut — your call at the window</div>
-      <div class="dish"><span class="n">Pork ribs</span><span class="dots"></span><span class="p">13</span></div>
-      <div class="dish-desc">St. Louis cut, dry rubbed</div>
-      <div class="dish"><span class="n">House sausage</span><span class="dots"></span><span class="p">11</span></div>
-      <div class="dish-desc">jalapeño-cheddar, made weekly</div>
-      <div class="dish"><span class="n">Pulled pork</span><span class="dots"></span><span class="p">12</span></div>
-
-      <div class="board-cat">Sandwiches</div>
-      <div class="dish"><span class="n">Brisket sandwich</span><span class="dots"></span><span class="p">14</span></div>
-      <div class="dish-desc">pickles, onion, white bread</div>
-      <div class="dish"><span class="n">Pulled pork sandwich</span><span class="dots"></span><span class="p">12</span></div>
-      <div class="dish-desc">slaw on top, the right way</div>
-
-      <div class="board-cat">Plates &amp; sides</div>
-      <div class="dish"><span class="n">Two-meat plate</span><span class="dots"></span><span class="p">21</span></div>
-      <div class="dish"><span class="n">Three-meat plate</span><span class="dots"></span><span class="p">26</span></div>
-      <div class="dish"><span class="n">Cheesy potato casserole</span><span class="dots"></span><span class="p">5</span></div>
-      <div class="dish"><span class="n">Collard greens</span><span class="dots"></span><span class="p">5</span></div>
-      <div class="dish"><span class="n">Banana pudding</span><span class="dots"></span><span class="p">6</span></div>
-      <div class="dish-desc">while it lasts — it never lasts</div>
-    </div>
-    <p class="board-note">Prices move with the brisket market. The truck window is the final word.<br><a href="/bbq/menu/">Get the full menu — printable, save-as-PDF →</a></p>
+    <p class="sec-sub">Post oak, salt, pepper, and fourteen hours. Brisket, ribs, house sausage, plates, and the banana pudding that never lasts — it's all on the menu.</p>
+    <p style="margin-bottom:0"><a class="menu-btn" href="/bbq/menu/">See the full menu</a></p>
+    <p class="board-note">Printable — save it, send it, stick it on the fridge. Prices move with the brisket market; the truck window is the final word.</p>
   </div>
 </section>
 
