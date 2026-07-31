@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- SITES BY ANT — brewery tap sheet DOCUMENT. The printed sheet
+     on every taproom table. CHANGE: keep in step with the TAPS
+     array on /brewery/. -->
+<title>Tap Sheet — Slow Current Brewing Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--stock:#f6f1e3;--navy:#1d2a44;--navy-soft:#54617c;--hairline:#cfc4a9;--amber:#a86a1d;--hop:#4a7c47}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#10182a;color:var(--navy);
+    font-size:15px;line-height:1.5;padding:34px 16px 60px;
+  }
+  .chrome{max-width:640px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .chrome a,.chrome button{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;
+    color:#dfe3ec;background:none;border:1.5px solid #35415c;padding:9px 16px;text-decoration:none;cursor:pointer;
+  }
+  .chrome a:hover,.chrome button:hover{border-color:#c9822a;color:#e0a54c}
+  .chrome .print{background:#a86a1d;border-color:#a86a1d;color:#f6f1e3}
+  .chrome .print:hover{background:#8a5514}
+
+  .sheet{max-width:640px;margin:0 auto;background:var(--stock);padding:44px 46px 32px;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+  @media(max-width:560px){.sheet{padding:30px 20px 24px}}
+  .head{text-align:center;border-bottom:2px solid var(--navy);padding-bottom:16px;margin-bottom:6px}
+  .head .spec{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--navy-soft)}
+  .head h1{font-family:'Instrument Serif';font-weight:400;font-size:2.5rem;line-height:1;margin:8px 0 2px}
+  .head h1 em{font-style:italic;color:var(--amber)}
+  .head .sub{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--navy-soft)}
+  .note{text-align:center;font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-soft);padding:10px 0 14px}
+
+  .tap{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--hairline)}
+  .tap .no{font-family:'Space Mono',monospace;font-weight:700;font-size:.72rem;color:var(--navy-soft);min-width:24px}
+  .tap .n{font-family:'Instrument Serif';font-size:1.15rem}
+  .tap .style{font-size:.78rem;color:var(--navy-soft);font-style:italic}
+  .tap .sp{flex:1;border-bottom:1.5px dotted var(--hairline);transform:translateY(-3px)}
+  .tap .abv{font-family:'Space Mono',monospace;font-weight:700;font-size:.78rem;color:var(--amber)}
+  .tap.soon .n,.tap.soon .style{color:var(--navy-soft)}
+  .tap .flag{font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--hop)}
+  .tap.soon .flag{color:var(--navy-soft)}
+
+  .foot{border-top:2px solid var(--navy);margin-top:16px;padding-top:12px;text-align:center;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-soft)}
+  .foot b{color:var(--amber);font-weight:700}
+  @page{size:letter;margin:.8in}
+  @media print{
+    body{background:#fff;padding:0}
+    .chrome{display:none}
+    .sheet{max-width:none;margin:0;padding:0;box-shadow:none}
+    a{color:inherit;text-decoration:none}
+  }
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="chrome">
+  <a href="/brewery/">← Back to the taproom</a>
+  <button class="print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="sheet">
+  <header class="head">
+    <div class="spec">Est. 2022 · 10 BBL · San Jose, California</div>
+    <h1>Slow <em>Current</em> — Tap Sheet</h1>
+    <div class="sub">Week of August 3 · Printed for the tables</div>
+  </header>
+  <p class="note">4oz tasters of anything · flights of four · crowlers to go</p>
+
+  <!-- CHANGE: keep in step with the TAPS array on /brewery/ -->
+  <div class="tap"><span class="no">01</span><span class="n">Creekside Pils</span><span class="style">Czech-style pilsner</span><span class="sp"></span><span class="abv">4.8%</span></div>
+  <div class="tap"><span class="no">02</span><span class="n">Porch Light</span><span class="style">Blonde ale</span><span class="sp"></span><span class="abv">5.0%</span></div>
+  <div class="tap"><span class="no">03</span><span class="n">Undertow</span><span class="style">West Coast IPA</span><span class="sp"></span><span class="abv">6.9%</span></div>
+  <div class="tap"><span class="no">04</span><span class="n">Fog on the Trail</span><span class="style">Hazy IPA</span><span class="sp"></span><span class="abv">6.5%</span></div>
+  <div class="tap"><span class="no">05</span><span class="n">Second Ferment</span><span class="style">Rye lager</span><span class="sp"></span><span class="abv">5.2%</span></div>
+  <div class="tap"><span class="no">06</span><span class="n">Sage Advice</span><span class="style">Foraged-sage saison</span><span class="sp"></span><span class="abv">6.1%</span></div>
+  <div class="tap"><span class="no">07</span><span class="n">Barrel No. 9</span><span class="style">Oak-aged sour</span><span class="sp"></span><span class="abv">5.4%</span></div>
+  <div class="tap"><span class="no">08</span><span class="n">Silt</span><span class="style">Oatmeal stout, nitro</span><span class="sp"></span><span class="abv">5.6%</span></div>
+  <div class="tap"><span class="no">09</span><span class="n">Night Water</span><span class="style">Baltic porter</span><span class="sp"></span><span class="abv">7.8%</span></div>
+  <div class="tap"><span class="no">10</span><span class="n">Low Tide</span><span class="style">Table beer</span><span class="sp"></span><span class="abv">3.2%</span></div>
+  <div class="tap soon"><span class="no">11</span><span class="n">Fresh-Hop Undertow</span><span class="style">Wet-hop IPA</span><span class="sp"></span><span class="flag">On deck</span></div>
+
+  <footer class="foot">
+    <div><b>Pints 8</b> · tasters 3 · flight of four 11 · crowler 12</div>
+    <div>If the garage door is up, the patio is open</div>
+  </footer>
+</div>
+
+</body>
+</html>

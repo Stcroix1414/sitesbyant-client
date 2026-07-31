@@ -97,14 +97,37 @@
   .filter-btn[aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:var(--blush)}
   .find.hide{display:none}
 
-  /* new arrivals — the IG-feed stand-in */
-  .finds{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  /* new arrivals — polaroid bento wall, not a card grid */
+  .finds{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 22px;grid-auto-flow:dense;align-items:start}
   @media(max-width:760px){.finds{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:480px){.finds{grid-template-columns:1fr}}
   .find{
-    background:#fff;border:1px solid var(--rule);border-radius:8px;overflow:hidden;
+    background:#fff;border:1px solid var(--rule);border-radius:2px;overflow:hidden;
+    padding:10px 10px 0;box-shadow:0 3px 14px rgba(74,44,58,.10);
   }
-  .find .ph{height:210px;background:center/cover no-repeat;filter:saturate(.92)}
+  .find:nth-child(odd){transform:rotate(-1.1deg)}
+  .find:nth-child(even){transform:rotate(.9deg)}
+  .find:nth-child(3n){transform:rotate(-.4deg)}
+  .find:hover{transform:rotate(0) scale(1.02);transition:transform .18s ease;z-index:2;position:relative}
+  @media (prefers-reduced-motion:reduce){.find,.find:hover{transform:none;transition:none}}
+  .find:nth-child(1){grid-row:span 1}
+  .find:nth-child(4) .ph{height:280px}
+  .find:nth-child(2) .ph{height:160px}
+  .find .ph{height:210px;background:center/cover no-repeat;filter:saturate(.92);border-radius:1px}
+  /* scroll-driven drift-in — native CSS, zero JS, progressive */
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      .find{
+        animation:find-in linear both;
+        animation-timeline:view();
+        animation-range:entry 0% entry 50%;
+      }
+      @keyframes find-in{
+        from{opacity:0;translate:0 24px}
+        to{opacity:1;translate:0 0}
+      }
+    }
+  }
   /* CHANGE: swap product photos weekly — mirror the IG feed */
   .find.f1 .ph{background-image:url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=900&q=70')}
   .find.f2 .ph{background-image:url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=900&q=70')}

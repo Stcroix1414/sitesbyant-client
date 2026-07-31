@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- SITES BY ANT — gym weekly schedule DOCUMENT. Printable; the
+     sheet members stick on the fridge. Search CHANGE: swap points. -->
+<title>Weekly Schedule — Foundry Strength Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--iron:#15161a;--chalk:#f2f2f0;--dust:#6c6e75;--rule:#d4d4d1;--signal:#e63b2e}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Public Sans',-apple-system,sans-serif;background:var(--iron);color:#1c1d21;
+    font-size:15px;line-height:1.5;padding:34px 16px 60px;
+  }
+  .chrome{max-width:840px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .chrome a,.chrome button{
+    font:inherit;font-weight:700;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--chalk);background:none;border:1px solid #34363d;border-radius:3px;padding:9px 18px;
+    text-decoration:none;cursor:pointer;
+  }
+  .chrome a:hover,.chrome button:hover{border-color:var(--signal);color:#ff6a5e}
+  .chrome .print{background:var(--signal);border-color:var(--signal);color:#fff}
+  .chrome .print:hover{background:#c22c21}
+
+  .sheet{max-width:840px;margin:0 auto;background:var(--chalk);padding:40px 44px 30px;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  @media(max-width:640px){.sheet{padding:28px 18px 22px}}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;border-bottom:4px solid #1c1d21;padding-bottom:14px;margin-bottom:18px;flex-wrap:wrap}
+  .head h1{font-family:'Anton';font-weight:400;text-transform:uppercase;font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1}
+  .head h1 span{color:var(--signal)}
+  .head .meta{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dust);text-align:right}
+
+  .grid{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:620px;font-variant-numeric:tabular-nums}
+  th{
+    font-family:'Anton';font-weight:400;text-transform:uppercase;letter-spacing:.06em;
+    font-size:.9rem;color:var(--dust);text-align:left;padding:10px 12px;border-bottom:3px solid #1c1d21;
+  }
+  td{padding:11px 12px;border-bottom:1px solid var(--rule);font-size:.86rem}
+  td:first-child{font-weight:700;white-space:nowrap}
+  .str{color:var(--signal);font-weight:700}
+  .con{color:#a8720f;font-weight:700}
+  .opn{color:var(--dust);font-weight:600}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-size:.76rem;color:var(--dust)}
+  .legend b{font-weight:700}
+  .legend .str,.legend .con,.legend .opn{font-size:.76rem}
+  .foot{border-top:4px solid #1c1d21;margin-top:16px;padding-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.74rem;color:var(--dust)}
+  .foot b{color:#1c1d21;font-weight:700}
+  @page{size:letter landscape;margin:.6in}
+  @media print{
+    body{background:#fff;padding:0}
+    .chrome{display:none}
+    .sheet{max-width:none;margin:0;padding:0;box-shadow:none}
+    a{color:inherit;text-decoration:none}
+  }
+  :focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="chrome">
+  <a href="/gym/">← Back to the gym</a>
+  <button class="print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="sheet">
+  <header class="head">
+    <h1>Foundry <span>Strength</span> — This Week</h1>
+    <div class="meta">Campbell, CA · (408) 555-0119<br>Book in the member app</div>
+  </header>
+
+  <div class="grid">
+    <!-- CHANGE: real weekly schedule — keep in step with the site -->
+    <table>
+      <tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+      <tr><td>6:00a</td><td class="str">Strength</td><td class="con">Conditioning</td><td class="str">Strength</td><td class="con">Conditioning</td><td class="str">Strength</td><td class="opn" rowspan="2">Open floor<br>8a – 12p</td></tr>
+      <tr><td>12:00p</td><td class="con">Conditioning</td><td class="str">Strength</td><td class="con">Conditioning</td><td class="str">Strength</td><td class="opn">Open floor</td></tr>
+      <tr><td>5:30p</td><td class="str">Strength</td><td class="str">Strength</td><td class="con">Conditioning</td><td class="str">Strength</td><td class="con">Conditioning</td><td></td></tr>
+      <tr><td>6:45p</td><td class="con">Conditioning</td><td class="opn">Open floor</td><td class="str">Strength</td><td class="con">Conditioning</td><td class="opn">Open floor</td><td></td></tr>
+    </table>
+  </div>
+  <div class="legend">
+    <span><b class="str">Strength</b> — 60 min, barbell, coached</span>
+    <span><b class="con">Conditioning</b> — 45 min, engine work</span>
+    <span><b class="opn">Open floor</b> — members, coach on deck</span>
+  </div>
+
+  <footer class="foot">
+    <span><b>Sundays closed.</b> Recovery is part of the program.</span>
+    <span>12 per class max · first week free</span>
+  </footer>
+</div>
+
+</body>
+</html>

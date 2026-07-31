@@ -190,6 +190,21 @@
   footer .sock a:hover{color:var(--signal)}
   footer .credit a{color:#5c5e66}
 
+  /* scroll-driven reveals — native CSS, zero JS, progressive */
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      .fmt,.coach,.plan{
+        animation:gym-rise linear both;
+        animation-timeline:view();
+        animation-range:entry 0% entry 55%;
+      }
+      @keyframes gym-rise{
+        from{opacity:0;transform:translateY(30px) scale(.98)}
+        to{opacity:1;transform:none}
+      }
+    }
+  }
+
   :focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 </style>
 </head>
@@ -296,7 +311,7 @@
         </tr>
       </table>
     </div>
-    <p class="sched-note">Sunday the doors stay shut. Recovery is part of the program. Today's column lights up on its own.</p>
+    <p class="sched-note">Sunday the doors stay shut. Recovery is part of the program. Today's column lights up on its own. <a href="/gym/schedule/">Print this week's schedule →</a></p>
   </div>
 </section>
 
